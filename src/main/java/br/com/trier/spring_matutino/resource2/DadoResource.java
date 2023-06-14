@@ -34,20 +34,16 @@ public class DadoResource {
 		String resposta = "Aposta: " + aposta + "\n";
 		int soma = 0;
 		
-		int contador = 1;
-		
-		while(contador <= qtd) {
+		for(int i = 1; i<= qtd; i++) {
 			int valor = sorteador.nextInt(6)+1;
 			soma += valor;
-			resposta += "Dado " + contador + ": valor sorteado " + valor + "\n";
-			contador++;
+			resposta += "Dado " + i + ": valor sorteado " + valor + "\n";
 		}
+	
+		int diferenca = aposta - soma;
+		double porcentagem = (diferenca*100)/soma;
 		
 		return resposta += "Soma: " + soma + "\n" +
-			               "Porcentagem " + porcentArcerto(soma, aposta) + "%";
-	}
-	
-	public Double porcentArcerto(Integer soma, Integer aposta) {
-		return (aposta*100)/soma.doubleValue();
+			               "Porcentagem " + String.format("%.2f", porcentagem) + "%";
 	}
 }
