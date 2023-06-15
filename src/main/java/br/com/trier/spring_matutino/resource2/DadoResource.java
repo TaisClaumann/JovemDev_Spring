@@ -18,16 +18,17 @@ public class DadoResource {
 	private Random sorteador = new Random();
 	
 	@GetMapping("/{qtd}/{aposta}")
-	public ResponseEntity<String> quantDados(@PathVariable (name = "qtd") Integer qtd, @PathVariable (name = "aposta") Integer aposta) {
-		String msgErro = "";
+	public ResponseEntity<String> quantDados(@PathVariable (name = "qtd") String qtd, @PathVariable (name = "aposta") String aposta) {
+		Integer qtdDados = validaValor(qtd);
+		Integer valorAposta = validaValor(aposta);
 		
-		if(qtd>4 || qtd<1) {
+		if(qtdDados>4 || qtdDados<1) {
 			throw new ValorInvalidoException("ERRO! Informe uma qtd maior que 1 e menor que 4");
-		} else if ((qtd*6) < aposta) {
-			throw new ValorInvalidoException("ERRO! A aposta não deve ser maior que " + (qtd*6));
+		} else if ((qtdDados*6) < valorAposta) {
+			throw new ValorInvalidoException("ERRO! A aposta não deve ser maior que " + (qtdDados*6));
 		}
 		
-		return ResponseEntity.ok(sorteiaDados(qtd, aposta));
+		return ResponseEntity.ok(sorteiaDados(qtdDados, valorAposta));
 	}
 	
 	public String sorteiaDados(Integer qtd, Integer aposta) {
@@ -45,5 +46,16 @@ public class DadoResource {
 		
 		return resposta += "Soma: " + soma + "\n" +
 			               "Porcentagem " + String.format("%.2f", porcentagem) + "%";
+	}
+	
+	public Integer validaValor(String valor) {
+		if(valor.isBlank()) {
+			throw new ValorInvalidoException("ERRO! Preencha os campos");
+		} else if (!(valor.matches("[0-9]"))) {
+			throw new ValorInvalidoException("ERRO! Os valores precisam ser números");
+		}
+		
+		Integer numero = Integer.parseInt(valor);
+		return numero;
 	}
 }
