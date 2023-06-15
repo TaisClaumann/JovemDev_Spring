@@ -40,22 +40,33 @@ public class DadoResource {
 			soma += valor;
 			resposta += "Dado " + i + ": valor sorteado " + valor + "\n";
 		}
-	
-		int diferenca = aposta - soma;
-		double porcentagem = (diferenca*100)/soma;
 		
 		return resposta += "Soma: " + soma + "\n" +
-			               "Porcentagem " + String.format("%.2f", porcentagem) + "%";
+			               verificaPorcentagem(soma, aposta);
 	}
 	
 	public Integer validaValor(String valor) {
 		if(valor.isBlank()) {
 			throw new ValorInvalidoException("ERRO! Preencha os campos");
-		} else if (!(valor.matches("[0-9]"))) {
+		} else if (!(valor.matches("[0-9]+"))) {
 			throw new ValorInvalidoException("ERRO! Os valores precisam ser números");
 		}
 		
 		Integer numero = Integer.parseInt(valor);
 		return numero;
+	}
+	
+	public double porcentagem(Integer soma, Integer aposta) {
+		double diferenca = Math.abs(soma-aposta);
+		double valorMaior = Math.max(soma, aposta);
+		return (diferenca/valorMaior)*100;
+	} 
+	
+	public String verificaPorcentagem(Integer soma, Integer aposta) {
+		double porcent = porcentagem(soma, aposta);
+		if(porcent == 0) {
+			return "Parabens! Você acertou!";
+		}
+		return "Porcentagem " + String.format("%.2f", porcent)+"%";
 	}
 }
