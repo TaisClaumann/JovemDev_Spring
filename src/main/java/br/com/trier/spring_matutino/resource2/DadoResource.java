@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.trier.spring_matutino.resource2.exceptions.ValorInvalidoException;
+
 @RestController
 @RequestMapping(value = "/aposta")
 public class DadoResource {
@@ -20,12 +22,10 @@ public class DadoResource {
 		String msgErro = "";
 		
 		if(qtd>4 || qtd<1) {
-			msgErro = "ERRO! Informe uma qtd maior que 1 e menor que 4";
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(msgErro);
+			throw new ValorInvalidoException("ERRO! Informe uma qtd maior que 1 e menor que 4");
 		} else if ((qtd*6) < aposta) {
-			msgErro = "ERRO! A aposta não deve ser maior que " + (qtd*6);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(msgErro);
-		} 
+			throw new ValorInvalidoException("ERRO! A aposta não deve ser maior que " + (qtd*6));
+		}
 		
 		return ResponseEntity.ok(sorteiaDados(qtd, aposta));
 	}
