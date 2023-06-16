@@ -17,7 +17,7 @@ import br.com.trier.spring_matutino.domain.Equipe;
 import br.com.trier.spring_matutino.services.EquipeService;
 
 @RestController
-@RequestMapping("/equipe")
+@RequestMapping(value = "/equipe")
 public class EquipeResource {
 	
 	@Autowired

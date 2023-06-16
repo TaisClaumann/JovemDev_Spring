@@ -44,4 +44,9 @@ public class CampeonatoServiceImpl implements CampeonatoService{
 			repo.delete(camp);
 		}
 	}
+
+	@Override
+	public Campeonato findByDescricaoEqualsIgnoreCase(String nome) {
+		return repo.findByDescricaoEqualsIgnoreCase(nome);
+	}
 }

@@ -53,5 +53,11 @@ public class UserResource {
 		service.delete(id);
 		return ResponseEntity.ok().build();
 	}
+	
+	@GetMapping("/nome/{nome}")
+	public ResponseEntity<List<User>> findByNome(@PathVariable String nome){
+		List<User> usuarios = service.findByNome(nome);
+		return usuarios.size()>0 ? ResponseEntity.ok(usuarios) : ResponseEntity.noContent().build();
+	}
 }
 

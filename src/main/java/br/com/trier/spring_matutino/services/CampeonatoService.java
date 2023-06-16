@@ -11,4 +11,5 @@ public interface CampeonatoService {
 	List<Campeonato> listAll();
 	Campeonato findById(Integer id);
 	void delete(Integer id);
+	Campeonato findByDescricaoEqualsIgnoreCase(String nome);
 }
