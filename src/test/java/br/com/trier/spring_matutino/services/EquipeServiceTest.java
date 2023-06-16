@@ -64,4 +64,12 @@ public class EquipeServiceTest extends BaseTests{
 		List<Equipe> equipes = service.listAll();
 		assertEquals(2, equipes.size());
 	}
+	
+	@Test
+	@DisplayName("Teste buscar equipe pelo nome")
+	@Sql({"classpath:/resources/sqls/equipe.sql"})
+	void findByNomeTest() {
+		List<Equipe> equipes = service.findByNome("Incriveis");
+		assertEquals(1, equipes.size());
+	}
 }

@@ -59,5 +59,11 @@ public class UserResource {
 		List<User> usuarios = service.findByNome(nome);
 		return usuarios.size()>0 ? ResponseEntity.ok(usuarios) : ResponseEntity.noContent().build();
 	}
+	
+	@GetMapping("/email/{email}")
+	public ResponseEntity<User> findByEmail(@PathVariable String email){
+		User user = service.findByEmail(email);
+		return user != null ? ResponseEntity.ok(user) : ResponseEntity.badRequest().build(); 
+	}
 }
 

@@ -11,4 +11,5 @@ public interface PaisService {
 	void delete(Integer id);
 	List<Pais> listAll();
 	Pais findById(Integer id);
+	Pais findByNomeEqualsIgnoreCase(String nome);
 }

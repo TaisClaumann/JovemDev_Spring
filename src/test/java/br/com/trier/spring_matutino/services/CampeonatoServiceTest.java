@@ -72,5 +72,14 @@ public class CampeonatoServiceTest extends BaseTests{
 	void findByDescricaoEqualsIgnoreCaseTest() {
 		var camp = service.findByDescricaoEqualsIgnoreCase("camp1");
 		assertThat(camp).isNotNull();
+		assertEquals("2023", camp.getAno());
+	}
+	
+	@Test
+	@DisplayName("Teste buscar campeonato pelo ano")
+	@Sql({"classpath:/resources/sqls/campeonato.sql"})
+	void findByAnoTest() {
+		List<Campeonato> campeonatos = service.findByAno("2023");
+		assertEquals(1, campeonatos.size());
 	}
 }

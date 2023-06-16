@@ -49,4 +49,10 @@ public class UserServiceImpl implements UserService{
 	public List<User> findByNome(String nome) {
 		return repo.findByNome(nome);
 	}
+
+	@Override
+	public User findByEmail(String email) {
+		Optional<User> user = repo.findByEmail(email);
+		return user.orElse(null);
+	}
 }

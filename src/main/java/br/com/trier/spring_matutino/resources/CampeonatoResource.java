@@ -55,10 +55,16 @@ public class CampeonatoResource {
 		return campeonatos.size()>0 ? ResponseEntity.ok(campeonatos) : ResponseEntity.noContent().build();
 	}
 	
-	@GetMapping("/nome/{nome}")
-	public ResponseEntity<Campeonato> findByDescricaoEqualsIgnoreCase(@PathVariable String nome){
-		Campeonato campeonato = service.findByDescricaoEqualsIgnoreCase(nome);
+	@GetMapping("/descricao/{descricao}")
+	public ResponseEntity<Campeonato> findByDescricaoEqualsIgnoreCase(@PathVariable String descricao){
+		Campeonato campeonato = service.findByDescricaoEqualsIgnoreCase(descricao);
 		return campeonato != null ? ResponseEntity.ok(campeonato) : ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/ano/{ano}")
+	public ResponseEntity<List<Campeonato>> findByAno(@PathVariable String ano){
+		List<Campeonato> campeonatos = service.findByAno(ano);
+		return campeonatos.size()>0 ? ResponseEntity.ok(campeonatos) : ResponseEntity.noContent().build();
 	}
 	
 }

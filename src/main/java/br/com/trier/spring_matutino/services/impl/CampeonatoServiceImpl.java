@@ -1,5 +1,6 @@
 package br.com.trier.spring_matutino.services.impl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +48,14 @@ public class CampeonatoServiceImpl implements CampeonatoService{
 
 	@Override
 	public Campeonato findByDescricaoEqualsIgnoreCase(String nome) {
-		return repo.findByDescricaoEqualsIgnoreCase(nome);
+		Optional<Campeonato> camp = repo.findByDescricaoEqualsIgnoreCase(nome);
+		return camp.orElse(null);
+	}
+
+	@Override
+	public List<Campeonato> findByAno(String ano) {
+		Optional<List<Campeonato>> campeonatos = repo.findByAno(ano);
+		return campeonatos.orElse(null);
+		
 	}
 }

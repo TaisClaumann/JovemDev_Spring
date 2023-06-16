@@ -65,4 +65,13 @@ public class PaisServiceTest extends BaseTests{
 		assertThat(pais).isNotNull();
 		assertEquals("Brasil", pais.getNome());
 	}
+	
+	@Test
+	@DisplayName("Teste buscar pais pelo nome ignorando o case")
+	@Sql({"classpath:/resources/sqls/pais.sql"})
+	void findByNomeTest() {
+		var pais = service.findByNomeEqualsIgnoreCase("brasil");
+		assertThat(pais).isNotNull();
+		assertEquals("Brasil", pais.getNome());
+	}
 }

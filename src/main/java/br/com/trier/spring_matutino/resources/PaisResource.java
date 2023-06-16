@@ -54,4 +54,9 @@ public class PaisResource {
 		return pais != null ? ResponseEntity.ok(pais) : ResponseEntity.noContent().build();
 	}
 
+	@GetMapping("/nome/{nome}")
+	public ResponseEntity<Pais> findByNomeEqualsIgnoreCase(@PathVariable String nome){
+		Pais pais = service.findByNomeEqualsIgnoreCase(nome);
+		return pais != null ? ResponseEntity.ok(pais) : ResponseEntity.noContent().build();
+	}
 }

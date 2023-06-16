@@ -86,4 +86,15 @@ public class UserServiceTest extends BaseTests{
 		usuarios = service.findByNome("4");
 		assertEquals(0, usuarios.size());
 	}
+	
+	@Test
+	@DisplayName("Teste buscar usuário pelo email")
+	@Sql({"classpath:/resources/sqls/usuario.sql"})
+	void findByEmailTest() {
+		var usuario = service.findByEmail("test@teste.com.br");
+		assertThat(usuario).isNotNull();
+		assertEquals(1, usuario.getId());
+		assertEquals("Usuario Test 1", usuario.getNome());
+		assertEquals("123", usuario.getPassword());
+	}
 }

@@ -45,4 +45,9 @@ public class PaisServiceImpl implements PaisService{
 		return pais.orElse(null);
 	}
 
+	@Override
+	public Pais findByNomeEqualsIgnoreCase(String nome) {
+		Optional<Pais> pais = repo.findByNomeEqualsIgnoreCase(nome);
+		return pais.orElse(null);
+	}
 }
