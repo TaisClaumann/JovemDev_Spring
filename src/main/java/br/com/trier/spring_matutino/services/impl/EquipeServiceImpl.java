@@ -46,7 +46,7 @@ public class EquipeServiceImpl implements EquipeService{
 	}
 
 	@Override
-	public List<Equipe> findByNome(String nome) {
-		return repo.findByNome(nome);
+	public List<Equipe> findByName(String name) {
+		return repo.findByName(name);
 	}
 }

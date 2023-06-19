@@ -54,9 +54,9 @@ public class EquipeResource {
 		return equipes.size()>0 ? ResponseEntity.ok(equipes) : ResponseEntity.noContent().build();
 	}
 	
-	@GetMapping("/nome/{nome}")
-	public ResponseEntity<List<Equipe>> findByNome(@PathVariable String nome){
-		List<Equipe> equipes = service.findByNome(nome);
+	@GetMapping("/name/{name}")
+	public ResponseEntity<List<Equipe>> findByName(@PathVariable String name){
+		List<Equipe> equipes = service.findByName(name);
 		return equipes.size()>0 ? ResponseEntity.ok(equipes) : ResponseEntity.noContent().build();
 	}
 }

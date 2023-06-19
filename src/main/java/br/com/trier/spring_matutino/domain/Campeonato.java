@@ -17,6 +17,10 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "id")
 @Entity
 public class Campeonato {
+	
+	/*
+	 * Implementar tratamentos para exceções
+	 */
 
 	@Id
 	@Setter
@@ -24,8 +28,8 @@ public class Campeonato {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column
-	private String descricao;
+	private String description;
 	@Column
-	private String ano;
+	private String year;
 	
 }

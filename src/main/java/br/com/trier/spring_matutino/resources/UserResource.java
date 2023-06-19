@@ -1,6 +1,7 @@
 package br.com.trier.spring_matutino.resources;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class UserResource {
 	
 	@PostMapping
 	public ResponseEntity<User> insert(@RequestBody User user){
-		User newUser = service.salvar(user);
+		User newUser = service.insert(user);
 		return newUser != null ? ResponseEntity.ok(newUser) : ResponseEntity.badRequest().build();
 	}
 	
@@ -54,16 +55,20 @@ public class UserResource {
 		return ResponseEntity.ok().build();
 	}
 	
-	@GetMapping("/nome/{nome}")
-	public ResponseEntity<List<User>> findByNome(@PathVariable String nome){
-		List<User> usuarios = service.findByNome(nome);
-		return usuarios.size()>0 ? ResponseEntity.ok(usuarios) : ResponseEntity.noContent().build();
+	@GetMapping("/name/{name}")
+	public ResponseEntity<List<User>> findByName(@PathVariable String name){
+		return ResponseEntity.ok(service.findByName(name));
 	}
 	
 	@GetMapping("/email/{email}")
 	public ResponseEntity<User> findByEmail(@PathVariable String email){
 		User user = service.findByEmail(email);
 		return user != null ? ResponseEntity.ok(user) : ResponseEntity.badRequest().build(); 
+	}
+	
+	@GetMapping("/like/{name}")
+	public ResponseEntity<List<User>>findByNameContainsIgnoreCase(@PathVariable String name){
+		return ResponseEntity.ok(service.findByNameContainsIgnoreCase(name));
 	}
 }
 

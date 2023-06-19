@@ -24,10 +24,10 @@ public class PaisServiceTest extends BaseTests{
 	@DisplayName("Teste salvar um pais")
 	void salvarTest() {
 		var pais = new Pais(null, "Brasil");
-		service.salvar(pais);
+		service.insert(pais);
 		List<Pais> paises = service.listAll();
 		assertEquals(1, paises.size());
-		assertEquals("Brasil", paises.get(0).getNome());
+		assertEquals("Brasil", paises.get(0).getName());
 	}
 
 	@Test
@@ -37,7 +37,7 @@ public class PaisServiceTest extends BaseTests{
 		var pais = new Pais(1, "Pais");
 		service.update(pais);
 		List<Pais> paises = service.listAll();
-		assertEquals("Pais", paises.get(1).getNome());
+		assertEquals("Pais", paises.get(1).getName());
 	}
 	
 	@Test
@@ -63,15 +63,15 @@ public class PaisServiceTest extends BaseTests{
 	void findByIdTest() {
 		var pais = service.findById(1);
 		assertThat(pais).isNotNull();
-		assertEquals("Brasil", pais.getNome());
+		assertEquals("Brasil", pais.getName());
 	}
 	
 	@Test
 	@DisplayName("Teste buscar pais pelo nome ignorando o case")
 	@Sql({"classpath:/resources/sqls/pais.sql"})
 	void findByNomeTest() {
-		var pais = service.findByNomeEqualsIgnoreCase("brasil");
+		var pais = service.findByNameEqualsIgnoreCase("brasil");
 		assertThat(pais).isNotNull();
-		assertEquals("Brasil", pais.getNome());
+		assertEquals("Brasil", pais.getName());
 	}
 }

@@ -36,7 +36,7 @@ public class EquipeServiceTest extends BaseTests{
 		var equipe = new Equipe(1, "Teste");
 		service.update(equipe);
 		List<Equipe> equipes = service.listAll();
-		assertEquals("Teste", equipes.get(1).getNome());
+		assertEquals("Teste", equipes.get(1).getName());
 	}
 	
 	@Test
@@ -45,7 +45,7 @@ public class EquipeServiceTest extends BaseTests{
 	void findByIdTest() {
 		var equipe = service.findById(1);
 		assertThat(equipe).isNotNull();
-		assertEquals("Incriveis", equipe.getNome());
+		assertEquals("Incriveis", equipe.getName());
 	}
 	
 	@Test
@@ -69,7 +69,7 @@ public class EquipeServiceTest extends BaseTests{
 	@DisplayName("Teste buscar equipe pelo nome")
 	@Sql({"classpath:/resources/sqls/equipe.sql"})
 	void findByNomeTest() {
-		List<Equipe> equipes = service.findByNome("Incriveis");
+		List<Equipe> equipes = service.findByName("Incriveis");
 		assertEquals(1, equipes.size());
 	}
 }

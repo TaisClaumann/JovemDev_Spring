@@ -11,6 +11,9 @@ import br.com.trier.spring_matutino.domain.Campeonato;
 @Repository
 public interface CampeonatoRepository extends JpaRepository<Campeonato, Integer>{
 
-	Optional<Campeonato> findByDescricaoEqualsIgnoreCase(String descricao);
-	Optional<List<Campeonato>>findByAno(String ano);
+	Optional<Campeonato> findByDescriptionEqualsIgnoreCase(String description);
+	Optional<List<Campeonato>>findByYear(String year);
+	List<Campeonato> findByYearBetween(String anoInicial, String anoFinal);
+	List<Campeonato> findByDescriptionContainsIgnoreCase(String description);
+	List<Campeonato> findByDescriptionContainsIgnoreCaseAndYearEquals(String description, String year);
 }

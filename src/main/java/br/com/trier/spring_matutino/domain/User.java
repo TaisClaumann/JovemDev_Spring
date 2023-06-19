@@ -18,19 +18,24 @@ import lombok.Setter;
 @Entity (name = "usuario")
 public class User {
 	
+	/*
+	 * Implementar buscas com contains
+	 * Implementar tratamentos para exceções
+	 * Violacao de integridade
+	 */
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Setter
-	@Column (name = "usuario_id")
+	@Column (name = "id")
 	private Integer id;
 	
-	@Column (name = "usuario_nome")
-	private String nome;
+	@Column (name = "nome")
+	private String name;
 	
-	@Column (name = "usuario_email", unique = true)
+	@Column (name = "email", unique = true)
 	private String email;
 	
-	@Column (name = "usuario_senha")
+	@Column (name = "senha")
 	private String password;
-
 }

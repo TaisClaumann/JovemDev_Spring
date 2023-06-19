@@ -1,21 +1,20 @@
-package br.com.trier.spring_matutino.resource2;
+package br.com.trier.spring_matutino.ativ_dado;
 
 import java.util.Random;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.trier.spring_matutino.resource2.exceptions.ValorInvalidoException;
+import br.com.trier.spring_matutino.ativ_dado.exceptions.ValorInvalidoException;
 
 @RestController
 @RequestMapping(value = "/aposta")
 public class DadoResource {
-	
-	private Random sorteador = new Random();
+
+private Random sorteador = new Random();
 	
 	@GetMapping("/{qtd}/{aposta}")
 	public ResponseEntity<String> quantDados(@PathVariable (name = "qtd") String qtd, @PathVariable (name = "aposta") String aposta) {

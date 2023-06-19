@@ -24,8 +24,8 @@ public class PaisResource {
 	private PaisService service;
 	
 	@PostMapping
-	public ResponseEntity<Pais> save(@RequestBody Pais pais){
-		Pais newPais = service.salvar(pais);
+	public ResponseEntity<Pais> insert(@RequestBody Pais pais){
+		Pais newPais = service.insert(pais);
 		return newPais != null ? ResponseEntity.ok(newPais) : ResponseEntity.badRequest().build();
 	}
 	
@@ -54,9 +54,9 @@ public class PaisResource {
 		return pais != null ? ResponseEntity.ok(pais) : ResponseEntity.noContent().build();
 	}
 
-	@GetMapping("/nome/{nome}")
-	public ResponseEntity<Pais> findByNomeEqualsIgnoreCase(@PathVariable String nome){
-		Pais pais = service.findByNomeEqualsIgnoreCase(nome);
+	@GetMapping("/name/{name}")
+	public ResponseEntity<Pais> findByNameEqualsIgnoreCase(@PathVariable String name){
+		Pais pais = service.findByNameEqualsIgnoreCase(name);
 		return pais != null ? ResponseEntity.ok(pais) : ResponseEntity.noContent().build();
 	}
 }

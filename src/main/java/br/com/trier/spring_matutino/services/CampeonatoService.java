@@ -1,6 +1,7 @@
 package br.com.trier.spring_matutino.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import br.com.trier.spring_matutino.domain.Campeonato;
 
@@ -11,6 +12,9 @@ public interface CampeonatoService {
 	List<Campeonato> listAll();
 	Campeonato findById(Integer id);
 	void delete(Integer id);
-	Campeonato findByDescricaoEqualsIgnoreCase(String descricao);
-	List<Campeonato> findByAno(String ano);
+	Campeonato findByDescriptionEqualsIgnoreCase(String description);
+	List<Campeonato> findByYear(String year);
+	List<Campeonato> findByYearBetween(String anoInicial, String anoFinal);
+	List<Campeonato> findByDescriptionContainsIgnoreCase(String description);
+	List<Campeonato> findByDescriptionContainsIgnoreCaseAndYearEquals(String description, String year);
 }

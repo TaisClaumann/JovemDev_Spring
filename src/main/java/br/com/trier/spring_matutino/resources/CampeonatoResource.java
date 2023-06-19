@@ -57,14 +57,32 @@ public class CampeonatoResource {
 	
 	@GetMapping("/descricao/{descricao}")
 	public ResponseEntity<Campeonato> findByDescricaoEqualsIgnoreCase(@PathVariable String descricao){
-		Campeonato campeonato = service.findByDescricaoEqualsIgnoreCase(descricao);
+		Campeonato campeonato = service.findByDescriptionEqualsIgnoreCase(descricao);
 		return campeonato != null ? ResponseEntity.ok(campeonato) : ResponseEntity.noContent().build();
 	}
 	
 	@GetMapping("/ano/{ano}")
 	public ResponseEntity<List<Campeonato>> findByAno(@PathVariable String ano){
-		List<Campeonato> campeonatos = service.findByAno(ano);
+		List<Campeonato> campeonatos = service.findByYear(ano);
 		return campeonatos.size()>0 ? ResponseEntity.ok(campeonatos) : ResponseEntity.noContent().build();
 	}
 	
+	@GetMapping("/ano-entre/{anoInicial}/{anoFianl}")
+	public ResponseEntity<List<Campeonato>> findByAnoBetween(@PathVariable String anoInicial, @PathVariable String anoFinal) {
+		List<Campeonato> campeonatos = service.findByYearBetween(anoInicial, anoFinal);
+		return campeonatos.size()>0 ? ResponseEntity.ok(campeonatos) : ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/like/{descricao}")
+	public ResponseEntity<List<Campeonato>> findByDescricaoContainsIgnoreCase(@PathVariable String descricao){
+		List<Campeonato> campeonatos = service.findByDescriptionContainsIgnoreCase(descricao);
+		return campeonatos.size()>0 ? ResponseEntity.ok(campeonatos) : ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/descricao-ano/{descricao}/{ano}")
+	public ResponseEntity<List<Campeonato>> findByDescricaoContainsIgnoreCaseAndAnoEquals(String descricao, String ano) {
+		List<Campeonato> campeonatos = service.findByDescriptionContainsIgnoreCaseAndYearEquals(descricao, ano);
+		return campeonatos.size()>0 ? ResponseEntity.ok(campeonatos) : ResponseEntity.noContent().build();
+	}
+
 }

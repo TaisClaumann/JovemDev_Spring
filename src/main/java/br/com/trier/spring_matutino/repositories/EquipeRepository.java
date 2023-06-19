@@ -11,6 +11,6 @@ import br.com.trier.spring_matutino.domain.Equipe;
 @Repository
 public interface EquipeRepository extends JpaRepository<Equipe, Integer>{
 	
-	List<Equipe> findByNome(String nome);
+	List<Equipe> findByName(String name);
 
 }

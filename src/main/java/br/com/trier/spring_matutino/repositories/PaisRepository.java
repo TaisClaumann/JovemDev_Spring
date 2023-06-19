@@ -10,6 +10,6 @@ import br.com.trier.spring_matutino.domain.Pais;
 @Repository
 public interface PaisRepository extends JpaRepository<Pais, Integer>{
 	
-	Optional<Pais> findByNomeEqualsIgnoreCase(String nome);
+	Optional<Pais> findByNameEqualsIgnoreCase(String name);
 
 }

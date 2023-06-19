@@ -12,5 +12,5 @@ public interface EquipeService {
 	Equipe findById(Integer id);
 	void delete(Integer id);
 	List<Equipe> listAll();
-	List<Equipe> findByNome(String nome);
+	List<Equipe> findByName(String name);
 }

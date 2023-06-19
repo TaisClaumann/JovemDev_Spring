@@ -36,7 +36,7 @@ public class CampeonatoServiceTest extends BaseTests{
 		var camp = new Campeonato(1, "Camp3", "2023");
 		service.update(camp);
 		List<Campeonato> campeonatos = service.listAll();
-		assertEquals("Camp3", campeonatos.get(0).getDescricao());
+		assertEquals("Camp3", campeonatos.get(0).getDescription());
 	}
 	
 	@Test
@@ -53,8 +53,8 @@ public class CampeonatoServiceTest extends BaseTests{
 	void findByIdTest() {
 		var camp = service.findById(1);
 		assertThat(camp).isNotNull();
-		assertEquals("Camp1", camp.getDescricao());
-		assertEquals("2023", camp.getAno());
+		assertEquals("Camp1", camp.getDescription());
+		assertEquals("2023", camp.getYear());
 	}
 	
 	@Test
@@ -70,16 +70,41 @@ public class CampeonatoServiceTest extends BaseTests{
 	@DisplayName("Teste buscar campeonato pela descricao ignorando o case")
 	@Sql({"classpath:/resources/sqls/campeonato.sql"})
 	void findByDescricaoEqualsIgnoreCaseTest() {
-		var camp = service.findByDescricaoEqualsIgnoreCase("camp1");
+		var camp = service.findByDescriptionEqualsIgnoreCase("camp1");
 		assertThat(camp).isNotNull();
-		assertEquals("2023", camp.getAno());
+		assertEquals("2023", camp.getYear());
 	}
 	
 	@Test
 	@DisplayName("Teste buscar campeonato pelo ano")
 	@Sql({"classpath:/resources/sqls/campeonato.sql"})
 	void findByAnoTest() {
-		List<Campeonato> campeonatos = service.findByAno("2023");
+		List<Campeonato> campeonatos = service.findByYear("2023");
 		assertEquals(1, campeonatos.size());
 	}
+	
+	@Test
+	@DisplayName("Teste buscar campeonatos entre anos")
+	@Sql({"classpath:/resources/sqls/campeonato.sql"})
+	void findByAnoBetweenTest() {
+		List<Campeonato> campeonatos = service.findByYearBetween("2022", "2023");
+		assertEquals(2, campeonatos.size());
+	}
+	
+	@Test
+	@DisplayName("Teste buscar pela descricao com like")
+	@Sql({"classpath:/resources/sqls/campeonato.sql"})
+	void findByDescricaoContainsIgnoreCaseTest() {
+		List<Campeonato> campeonatos = service.findByDescriptionContainsIgnoreCase("Camp");
+		assertEquals(3, campeonatos.size());
+	}
+	
+	@Test
+	@DisplayName("Teste buscar pela descricao com like e pelo ano")
+	@Sql({"classpath:/resources/sqls/campeonato.sql"})
+	void findByDescricaoContainsIgnoreCaseAndAnoEqualsTest() {
+		List<Campeonato> campeonatos = service.findByDescriptionContainsIgnoreCaseAndYearEquals("Camp", "2022");
+		assertEquals(1, campeonatos.size());
+	}
+	
 }

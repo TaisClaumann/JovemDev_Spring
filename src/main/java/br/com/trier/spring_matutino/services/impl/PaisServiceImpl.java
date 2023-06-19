@@ -17,7 +17,7 @@ public class PaisServiceImpl implements PaisService{
 	private PaisRepository repo;
 	
 	@Override
-	public Pais salvar(Pais pais) {
+	public Pais insert(Pais pais) {
 		return repo.save(pais);
 	}
 
@@ -46,8 +46,8 @@ public class PaisServiceImpl implements PaisService{
 	}
 
 	@Override
-	public Pais findByNomeEqualsIgnoreCase(String nome) {
-		Optional<Pais> pais = repo.findByNomeEqualsIgnoreCase(nome);
+	public Pais findByNameEqualsIgnoreCase(String name) {
+		Optional<Pais> pais = repo.findByNameEqualsIgnoreCase(name);
 		return pais.orElse(null);
 	}
 }

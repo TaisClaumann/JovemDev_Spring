@@ -47,15 +47,30 @@ public class CampeonatoServiceImpl implements CampeonatoService{
 	}
 
 	@Override
-	public Campeonato findByDescricaoEqualsIgnoreCase(String nome) {
-		Optional<Campeonato> camp = repo.findByDescricaoEqualsIgnoreCase(nome);
+	public Campeonato findByDescriptionEqualsIgnoreCase(String description) {
+		Optional<Campeonato> camp = repo.findByDescriptionEqualsIgnoreCase(description);
 		return camp.orElse(null);
 	}
 
 	@Override
-	public List<Campeonato> findByAno(String ano) {
-		Optional<List<Campeonato>> campeonatos = repo.findByAno(ano);
+	public List<Campeonato> findByYear(String year) {
+		Optional<List<Campeonato>> campeonatos = repo.findByYear(year);
 		return campeonatos.orElse(null);
 		
+	}
+
+	@Override
+	public List<Campeonato> findByYearBetween(String anoInicial, String anoFinal) {
+		return repo.findByYearBetween(anoInicial, anoFinal);
+	}
+
+	@Override
+	public List<Campeonato> findByDescriptionContainsIgnoreCase(String description) {
+		return repo.findByDescriptionContainsIgnoreCase(description);
+	}
+
+	@Override
+	public List<Campeonato> findByDescriptionContainsIgnoreCaseAndYearEquals(String description, String year) {
+		return repo.findByDescriptionContainsIgnoreCaseAndYearEquals(description, year);
 	}
 }
