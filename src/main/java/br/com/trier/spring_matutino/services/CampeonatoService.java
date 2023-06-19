@@ -13,8 +13,8 @@ public interface CampeonatoService {
 	Campeonato findById(Integer id);
 	void delete(Integer id);
 	Campeonato findByDescriptionEqualsIgnoreCase(String description);
-	List<Campeonato> findByYear(String year);
-	List<Campeonato> findByYearBetween(String anoInicial, String anoFinal);
+	List<Campeonato> findByAno(String ano);
+	List<Campeonato> findByAnoBetween(String anoInicial, String anoFinal);
 	List<Campeonato> findByDescriptionContainsIgnoreCase(String description);
-	List<Campeonato> findByDescriptionContainsIgnoreCaseAndYearEquals(String description, String year);
+	List<Campeonato> findByDescriptionContainsIgnoreCaseAndAnoEquals(String description, String ano);
 }

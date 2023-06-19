@@ -13,25 +13,38 @@ import br.com.trier.spring_matutino.services.exceptions.ObjetoNaoEncontrado;
 import br.com.trier.spring_matutino.services.exceptions.ViolacaoDeIntegridade;
 
 @Service
-public class UserServiceImpl implements UserService{
-	
+public class UserServiceImpl implements UserService {
+
 	@Autowired
 	UserRepository repo;
 
 	@Override
 	public User insert(User user) {
-		Optional<User> usuarioOptional = repo.findByEmail(user.getEmail());
-		if(usuarioOptional.isPresent()) {
-			User usuario = usuarioOptional.get();
-			if(user.getId() != usuario.getId()) {
-				throw new ViolacaoDeIntegridade("Esse email já existe");
+		if(validaUser(user)) {
+			Optional<User> usuarioOptional = repo.findByEmail(user.getEmail());
+			if (usuarioOptional.isPresent()) {
+				User usuario = usuarioOptional.get();
+				if (user.getId() != usuario.getId()) {
+					throw new ViolacaoDeIntegridade("Esse email já existe");
+				}
 			}
 		}
 		return repo.save(user);
 	}
+	
+	private boolean validaUser(User user) {
+		if(user == null || user.getName().isBlank() || user.getEmail().isBlank() || user.getPassword().isBlank()) {
+			throw new ViolacaoDeIntegridade("Preencha os dados do usuário");
+		}  
+		return true;
+	}
 
 	@Override
 	public List<User> listAll() {
+		List<User> usuarios = repo.findAll();
+		if (usuarios.size() == 0) {
+			throw new ObjetoNaoEncontrado("Não há usuários cadastrados");
+		}
 		return repo.findAll();
 	}
 
@@ -53,24 +66,21 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<User> findByName(String name) {
-		List<User> usuarios = repo.findByName(name);
-		if(usuarios.size()==0) {
-			throw new ObjetoNaoEncontrado("Não há nenhum usuário com o nome " + name);
-		}
-		return usuarios;
+	public User findByName(String name) {
+		Optional<User> user = repo.findByName(name);
+		return user.orElseThrow(() -> new ObjetoNaoEncontrado("Usuário %s não encontrado".formatted(name)));
 	}
 
 	@Override
 	public User findByEmail(String email) {
 		Optional<User> user = repo.findByEmail(email);
-		return user.orElse(null);
+		return user.orElseThrow(() -> new ObjetoNaoEncontrado("Usuário %s não encontrado".formatted(email)));
 	}
 
 	@Override
 	public List<User> findByNameContainsIgnoreCase(String name) {
 		List<User> usuarios = repo.findByNameContainsIgnoreCase(name);
-		if(usuarios.size()==0) {
+		if (usuarios.size() == 0) {
 			throw new ObjetoNaoEncontrado("Não há nenhum usuário com o nome " + name);
 		}
 		return usuarios;

@@ -25,15 +25,13 @@ public class PaisResource {
 	
 	@PostMapping
 	public ResponseEntity<Pais> insert(@RequestBody Pais pais){
-		Pais newPais = service.insert(pais);
-		return newPais != null ? ResponseEntity.ok(newPais) : ResponseEntity.badRequest().build();
+		return ResponseEntity.ok(service.insert(pais));
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Pais> update(@PathVariable Integer id, @RequestBody Pais pais){
 		pais.setId(id);
-		pais = service.update(pais);
-		return pais != null ? ResponseEntity.ok(pais) : ResponseEntity.badRequest().build();
+		return ResponseEntity.ok(service.update(pais));
 	}
 	
 	@DeleteMapping("/{id}")
@@ -44,19 +42,21 @@ public class PaisResource {
 	
 	@GetMapping()
 	public ResponseEntity<List<Pais>> listAll(){
-		List<Pais> paises = service.listAll();
-		return paises.size()>0 ? ResponseEntity.ok(paises) : ResponseEntity.noContent().build();
+		return ResponseEntity.ok(service.listAll());
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Pais> findById(@PathVariable Integer id){
-		Pais pais = service.findById(id);
-		return pais != null ? ResponseEntity.ok(pais) : ResponseEntity.noContent().build();
+		return ResponseEntity.ok(service.findById(id));
 	}
 
 	@GetMapping("/name/{name}")
 	public ResponseEntity<Pais> findByNameEqualsIgnoreCase(@PathVariable String name){
-		Pais pais = service.findByNameEqualsIgnoreCase(name);
-		return pais != null ? ResponseEntity.ok(pais) : ResponseEntity.noContent().build();
+		return ResponseEntity.ok(service.findByNameEqualsIgnoreCase(name));
+	}
+	
+	@GetMapping("/like/{name}")
+	public ResponseEntity<List<Pais>> findByNameContainsIgnoreCase(@PathVariable String name){
+		return ResponseEntity.ok(service.findByNameContainsIgnoreCase(name));
 	}
 }

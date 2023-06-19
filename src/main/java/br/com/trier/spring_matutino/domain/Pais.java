@@ -18,12 +18,6 @@ import lombok.Setter;
 @Entity
 public class Pais {
 	
-	/*
-	 * Fazer busca pelo nome usando contains e deletar outro metodo de busca
-	 * Implementar tratamentos para exceções
-	 * Violacao de integridade
-	 */
-	
 	@Id
 	@Setter
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

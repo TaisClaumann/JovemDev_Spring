@@ -17,12 +17,6 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "id")
 @Entity
 public class Equipe {
-	
-	/*
-	 * Fazer busca pelo nome com contains e apagar outro metodo
-	 * Implementar tratamentos para exceções
-	 * Violacao de integridade
-	 */
 
 	@Id
 	@Column

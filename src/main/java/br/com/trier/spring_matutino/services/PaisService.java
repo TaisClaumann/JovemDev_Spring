@@ -12,4 +12,5 @@ public interface PaisService {
 	List<Pais> listAll();
 	Pais findById(Integer id);
 	Pais findByNameEqualsIgnoreCase(String name);
+	List<Pais> findByNameContainsIgnoreCase(String name);
 }

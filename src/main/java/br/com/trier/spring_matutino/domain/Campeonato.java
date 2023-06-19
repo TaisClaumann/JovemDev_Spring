@@ -18,18 +18,16 @@ import lombok.Setter;
 @Entity
 public class Campeonato {
 	
-	/*
-	 * Implementar tratamentos para exceções
-	 */
-
 	@Id
 	@Setter
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
 	@Column
 	private String description;
+	
 	@Column
-	private String year;
+	private String ano;
 	
 }

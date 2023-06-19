@@ -1,2 +1,2 @@
-insert into equipe(id, nome) values(1, 'Incriveis');
-insert into equipe(id, nome) values(2, 'Batman');
+insert into equipe(id, name) values(1, 'Incriveis');
+insert into equipe(id, name) values(2, 'Batman');

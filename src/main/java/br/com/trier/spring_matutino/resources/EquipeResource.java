@@ -25,15 +25,13 @@ public class EquipeResource {
 	
 	@PostMapping
 	public ResponseEntity<Equipe> insert(@RequestBody Equipe equipe){
-		Equipe newEquipe = service.insert(equipe);
-		return newEquipe != null ? ResponseEntity.ok(equipe) : ResponseEntity.badRequest().build();
+		return ResponseEntity.ok(service.insert(equipe));
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Equipe> update(@RequestBody Equipe equipe, @PathVariable Integer id){
 		equipe.setId(id);
-		equipe = service.insert(equipe);
-		return equipe != null ? ResponseEntity.ok(equipe) : ResponseEntity.badRequest().build();
+		return ResponseEntity.ok(service.update(equipe));
 	}
 	
 	@DeleteMapping("/{id}")
@@ -44,19 +42,20 @@ public class EquipeResource {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Equipe> findById(@PathVariable Integer id){
-		Equipe equipe = service.findById(id);
-		return equipe != null ? ResponseEntity.ok(equipe) : ResponseEntity.badRequest().build();
+		return ResponseEntity.ok(service.findById(id));
 	}
 	
 	@GetMapping()
 	public ResponseEntity<List<Equipe>> listAll(){
-		List<Equipe> equipes = service.listAll();
-		return equipes.size()>0 ? ResponseEntity.ok(equipes) : ResponseEntity.noContent().build();
+		return ResponseEntity.ok(service.listAll());
 	}
 	
 	@GetMapping("/name/{name}")
-	public ResponseEntity<List<Equipe>> findByName(@PathVariable String name){
-		List<Equipe> equipes = service.findByName(name);
-		return equipes.size()>0 ? ResponseEntity.ok(equipes) : ResponseEntity.noContent().build();
+	public ResponseEntity<Equipe> findByName(@PathVariable String name){
+		return ResponseEntity.ok(service.findByName(name));
+	}
+	
+	public ResponseEntity<List<Equipe>> findByNameContainsIgnoreCase(@PathVariable String name){
+		return ResponseEntity.ok(service.findByNameContainsIgnoreCase(name));
 	}
 }

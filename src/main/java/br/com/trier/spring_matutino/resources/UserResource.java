@@ -26,27 +26,23 @@ public class UserResource {
 	
 	@PostMapping
 	public ResponseEntity<User> insert(@RequestBody User user){
-		User newUser = service.insert(user);
-		return newUser != null ? ResponseEntity.ok(newUser) : ResponseEntity.badRequest().build();
+		return ResponseEntity.ok(service.insert(user));
 	}
 	
 	@GetMapping
 	public ResponseEntity<List<User>> listAll() {
-		List<User> usuarios = service.listAll();
-		return usuarios.size()>0 ? ResponseEntity.ok(usuarios) : ResponseEntity.noContent().build();
+		return ResponseEntity.ok(service.listAll());
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<User> findById(@PathVariable Integer id) {
-		User user = service.findById(id);
-		return user != null ? ResponseEntity.ok(user) : ResponseEntity.noContent().build();
+		return ResponseEntity.ok(service.findById(id));
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<User> update(@PathVariable Integer id, @RequestBody User user){
 		user.setId(id);
-		user = service.update(user);
-		return user != null ? ResponseEntity.ok(user) : ResponseEntity.badRequest().build(); 
+		return ResponseEntity.ok(service.update(user));
 	}
 	
 	@DeleteMapping("/{id}")
@@ -56,14 +52,13 @@ public class UserResource {
 	}
 	
 	@GetMapping("/name/{name}")
-	public ResponseEntity<List<User>> findByName(@PathVariable String name){
+	public ResponseEntity<User> findByName(@PathVariable String name){
 		return ResponseEntity.ok(service.findByName(name));
 	}
 	
 	@GetMapping("/email/{email}")
 	public ResponseEntity<User> findByEmail(@PathVariable String email){
-		User user = service.findByEmail(email);
-		return user != null ? ResponseEntity.ok(user) : ResponseEntity.badRequest().build(); 
+		return ResponseEntity.ok(service.findByEmail(email));
 	}
 	
 	@GetMapping("/like/{name}")

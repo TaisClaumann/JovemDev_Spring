@@ -54,8 +54,15 @@ public class UserServiceTest extends BaseTests{
 	}
 	
 	@Test
+	@DisplayName("Teste listar usuarios com lista vazia")
+	void listAllEmptyTest() {
+		var exception = assertThrows(ObjetoNaoEncontrado.class, () -> service.listAll());
+		assertEquals("Não há usuários cadastrados", exception.getMessage());	
+	}
+	
+	@Test
 	@DisplayName("Teste salvar usuario")
-	void salvarTest() {
+	void insertTest() {
 		User user = new User(null, "Usuario Test 3", "test3@teste.com.br", "123");
 		service.insert(user);
 		List<User> usuarios = service.listAll();
@@ -65,10 +72,18 @@ public class UserServiceTest extends BaseTests{
 	@Test
 	@DisplayName("Teste salvar usuario com email duplicado")
 	@Sql({"classpath:/resources/sqls/usuario.sql"})
-	void salvarDuplicatedEmailTest() {
+	void insertDuplicatedEmailTest() {
 		User user = new User(null, "Usuario Test 3", "test@teste.com.br", "123");
 		var exception = assertThrows(ViolacaoDeIntegridade.class, () -> service.insert(user));
 		assertEquals("Esse email já existe", exception.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Teste salvar usuario com dados vazios")
+	void insertEmptyUserTest() {
+		User user = new User(null, "", "", "");
+		var exception = assertThrows(ViolacaoDeIntegridade.class, () -> service.insert(user));
+		assertEquals("Preencha os dados do usuário", exception.getMessage());
 	}
 	
 	@Test
@@ -111,14 +126,14 @@ public class UserServiceTest extends BaseTests{
 	@DisplayName("Teste buscar usuario pelo nome")
 	@Sql({"classpath:/resources/sqls/usuario.sql"})
 	void findByNomeTest() {
-		List<User> usuarios = service.findByName("Usuario Test 1");
-		assertEquals(1, usuarios.size());
+		User user = service.findByName("Usuario Test 1");
+		assertEquals(1, user.getId());
 		var exception = assertThrows(ObjetoNaoEncontrado.class, () -> service.findByName("4"));
-		assertEquals("Não há nenhum usuário com o nome 4", exception.getMessage());
+		assertEquals("Usuário 4 não encontrado", exception.getMessage());
 	}
 	
 	@Test
-	@DisplayName("Teste buscar usuario por nome que inicia com")
+	@DisplayName("Teste buscar usuario por nome que contenha x letras")
 	@Sql({"classpath:/resources/sqls/usuario.sql"})
 	void findByNomeContainsIgnoreCaseTest() {
 		List<User> usuarios = service.findByNameContainsIgnoreCase("Usuario");
@@ -126,7 +141,7 @@ public class UserServiceTest extends BaseTests{
 	}
 	
 	@Test
-	@DisplayName("Teste buscar usuario por nome cujo nome não existe")
+	@DisplayName("Teste buscar usuario por nome inexistente")
 	@Sql({"classpath:/resources/sqls/usuario.sql"})
 	void findByNomeContainsIgnoreCaseNotFoundTest() {
 		var exception = assertThrows(ObjetoNaoEncontrado.class, () -> service.findByNameContainsIgnoreCase("4"));

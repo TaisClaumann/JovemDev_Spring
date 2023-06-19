@@ -12,7 +12,7 @@ public interface UserService {
 	User findById(Integer id);
 	User update(User user);
 	void delete(Integer id);
-	List<User> findByName(String name);
+	User findByName(String name);
 	User findByEmail(String email);
 	List<User> findByNameContainsIgnoreCase(String name);
 }
