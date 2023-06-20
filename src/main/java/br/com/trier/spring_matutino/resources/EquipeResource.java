@@ -30,7 +30,6 @@ public class EquipeResource {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Equipe> update(@RequestBody Equipe equipe, @PathVariable Integer id){
-		equipe.setId(id);
 		return ResponseEntity.ok(service.update(equipe));
 	}
 	
@@ -55,6 +54,7 @@ public class EquipeResource {
 		return ResponseEntity.ok(service.findByName(name));
 	}
 	
+	@GetMapping("/like/{name}")
 	public ResponseEntity<List<Equipe>> findByNameContainsIgnoreCase(@PathVariable String name){
 		return ResponseEntity.ok(service.findByNameContainsIgnoreCase(name));
 	}

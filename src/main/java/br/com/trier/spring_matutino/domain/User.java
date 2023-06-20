@@ -18,11 +18,7 @@ import lombok.Setter;
 @EqualsAndHashCode(of = "id")
 @Entity (name = "usuario")
 public class User {
-	
-	/*
-	 * validar update para caso não encontre o solte um erro
-	 */
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Setter

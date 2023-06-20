@@ -48,7 +48,7 @@ public class PaisServiceTest extends BaseTests{
 	void insertInvalidTest() {
 		var pais = new Pais(null, "");
 		var exception = assertThrows(ViolacaoDeIntegridade.class, () -> service.insert(pais));
-		assertEquals("Preencha os dados do pais", exception.getMessage());
+		assertEquals("Preencha os dados do país", exception.getMessage());
 	}
 
 	@Test

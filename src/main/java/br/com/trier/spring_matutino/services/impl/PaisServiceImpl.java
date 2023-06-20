@@ -33,14 +33,19 @@ public class PaisServiceImpl implements PaisService{
 	}
 	
 	private boolean validaPais(Pais pais) {
-		if(pais == null || pais.getName().isBlank() || pais.getName() == null) {
-			throw new ViolacaoDeIntegridade("Preencha os dados do pais");
-		} 
+		if(pais == null) {
+			throw new ViolacaoDeIntegridade("O país está nulo");
+		} else if (pais.getName().isBlank() || pais.getName() == null) {
+			throw new ViolacaoDeIntegridade("Preencha os dados do país");
+		}
 		return true;
 	}
 
 	@Override
 	public Pais update(Pais pais) {
+		if(!listAll().contains(pais)) {
+			throw new ObjetoNaoEncontrado("Esse país não existe");
+		}
 		return insert(pais);
 	}
 

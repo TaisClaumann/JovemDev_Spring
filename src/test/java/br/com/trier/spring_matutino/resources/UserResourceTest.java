@@ -37,9 +37,6 @@ public class UserResourceTest {
 	
 	@Autowired
 	protected TestRestTemplate rest;
-	
-	@Autowired
-	UserServiceImpl service;
 
 	private ResponseEntity<UserDTO> getUser(String url) { //converte o json
 		return rest.getForEntity(url, UserDTO.class);

@@ -33,9 +33,13 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	private boolean validaUser(User user) {
-		if(user == null || user.getName().isBlank() || user.getEmail().isBlank()) {
-			throw new ViolacaoDeIntegridade("Preencha os dados do usuário");
-		}  
+		if(user == null) {
+			throw new ViolacaoDeIntegridade("O usuário está nulo");
+		} else if(user.getName() == null || user.getName().isBlank()) {
+			throw new ViolacaoDeIntegridade("O nome está vazio");
+		} else if(user.getEmail() == null || user.getEmail().isBlank()) {
+			throw new ViolacaoDeIntegridade("O email está vazio");
+		}
 		return true;
 	}
 
@@ -56,6 +60,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User update(User user) {
+		if(!listAll().contains(user)) {
+			throw new ObjetoNaoEncontrado("Esse usuário não existe");
+		}
 		return insert(user);
 	}
 

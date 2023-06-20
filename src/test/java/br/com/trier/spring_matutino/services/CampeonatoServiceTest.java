@@ -41,7 +41,7 @@ public class CampeonatoServiceTest extends BaseTests{
 		
 		var camp2 = new Campeonato(null, "", "");
 		var exception2 = assertThrows(ViolacaoDeIntegridade.class, () -> service.insert(camp2));
-		assertEquals("Preencha os dados da equipe", exception2.getMessage());
+		assertEquals("A descrição está vazia", exception2.getMessage());
 	}
 
 	@Test
@@ -64,7 +64,7 @@ public class CampeonatoServiceTest extends BaseTests{
 		
 		var camp2 = new Campeonato(1, "", "");
 		var exception2 = assertThrows(ViolacaoDeIntegridade.class, () -> service.update(camp2));
-		assertEquals("Preencha os dados da equipe", exception2.getMessage());
+		assertEquals("A descrição está vazia", exception2.getMessage());
 	}
 	
 	@Test

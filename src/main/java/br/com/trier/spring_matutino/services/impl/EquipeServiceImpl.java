@@ -34,14 +34,19 @@ public class EquipeServiceImpl implements EquipeService{
 	}
 
 	private boolean validaEquipe(Equipe equipe) {
-		if(equipe == null || equipe.getName().isBlank() || equipe.getName() == null) {
+		if(equipe == null) {
+			throw new ViolacaoDeIntegridade("A equipe é nula");
+		} else if(equipe.getName() == null || equipe.getName().isBlank()) {
 			throw new ViolacaoDeIntegridade("Preencha os dados da equipe");
-		} 
+		}
 		return true;
 	}
 	
 	@Override
 	public Equipe update(Equipe equipe) {
+		if(!listAll().contains(equipe)) {
+			throw new ObjetoNaoEncontrado("Essa equipe não existe");
+		}
 		return insert(equipe);
 	}
 

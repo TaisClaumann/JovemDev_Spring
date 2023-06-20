@@ -30,8 +30,7 @@ public class CampeonatoResource {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Campeonato> update(@RequestParam Campeonato campeonato, @PathVariable Integer id){
-		campeonato.setId(id);
+	public ResponseEntity<Campeonato> update(@RequestBody Campeonato campeonato, @PathVariable Integer id){
 		return ResponseEntity.ok(service.update(campeonato));
 	}
 	
@@ -71,8 +70,8 @@ public class CampeonatoResource {
 		return ResponseEntity.ok(service.findByDescriptionContainsIgnoreCase(description));
 	}
 	
-	@GetMapping("/description-year/{description}/{year}")
-	public ResponseEntity<List<Campeonato>> findByDescriptionContainsIgnoreCaseAndAnoEquals(String description, String ano) {
+	@GetMapping("/description-ano/{description}/{ano}")
+	public ResponseEntity<List<Campeonato>> findByDescriptionContainsIgnoreCaseAndAnoEquals(@PathVariable String description, @PathVariable String ano) {
 		return ResponseEntity.ok(service.findByDescriptionContainsIgnoreCaseAndAnoEquals(description, ano));
 	}
 }

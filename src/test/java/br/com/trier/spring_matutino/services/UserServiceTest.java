@@ -83,7 +83,7 @@ public class UserServiceTest extends BaseTests{
 	void insertEmptyUserTest() {
 		User user = new User(null, "", "", "");
 		var exception = assertThrows(ViolacaoDeIntegridade.class, () -> service.insert(user));
-		assertEquals("Preencha os dados do usuário", exception.getMessage());
+		assertEquals("O nome está vazio", exception.getMessage());
 	}
 	
 	@Test
