@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.trier.spring_matutino.domain.User;
+import br.com.trier.spring_matutino.domain.dto.UserDTO;
 import br.com.trier.spring_matutino.services.UserService;
 
 @RestController
@@ -25,24 +26,27 @@ public class UserResource {
 	private UserService service;
 	
 	@PostMapping
-	public ResponseEntity<User> insert(@RequestBody User user){
-		return ResponseEntity.ok(service.insert(user));
+	public ResponseEntity<UserDTO> insert(@RequestBody UserDTO userDTO){
+		User newUser = service.insert(new User(userDTO));
+		return ResponseEntity.ok(newUser.toDTO());
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<User>> listAll() {
-		return ResponseEntity.ok(service.listAll());
+	public ResponseEntity<List<UserDTO>> listAll() {
+		return ResponseEntity.ok(service.listAll().stream().map((user) -> user.toDTO()).toList());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<User> findById(@PathVariable Integer id) {
-		return ResponseEntity.ok(service.findById(id));
+	public ResponseEntity<UserDTO> findById(@PathVariable Integer id) {
+		return ResponseEntity.ok(service.findById(id).toDTO());
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<User> update(@PathVariable Integer id, @RequestBody User user){
+	public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody UserDTO userDTO){
+		User user = new User(userDTO);
 		user.setId(id);
-		return ResponseEntity.ok(service.update(user));
+		user = service.update(user);
+		return ResponseEntity.ok(user.toDTO());
 	}
 	
 	@DeleteMapping("/{id}")
@@ -52,18 +56,18 @@ public class UserResource {
 	}
 	
 	@GetMapping("/name/{name}")
-	public ResponseEntity<User> findByName(@PathVariable String name){
-		return ResponseEntity.ok(service.findByName(name));
+	public ResponseEntity<UserDTO> findByName(@PathVariable String name){
+		return ResponseEntity.ok(service.findByName(name).toDTO());
 	}
 	
 	@GetMapping("/email/{email}")
-	public ResponseEntity<User> findByEmail(@PathVariable String email){
-		return ResponseEntity.ok(service.findByEmail(email));
+	public ResponseEntity<UserDTO> findByEmail(@PathVariable String email){
+		return ResponseEntity.ok(service.findByEmail(email).toDTO());
 	}
 	
 	@GetMapping("/like/{name}")
-	public ResponseEntity<List<User>>findByNameContainsIgnoreCase(@PathVariable String name){
-		return ResponseEntity.ok(service.findByNameContainsIgnoreCase(name));
+	public ResponseEntity<List<UserDTO>>findByNameContainsIgnoreCase(@PathVariable String name){
+		return ResponseEntity.ok(service.findByNameContainsIgnoreCase(name).stream().map((user) -> user.toDTO()).toList());
 	}
 }
 

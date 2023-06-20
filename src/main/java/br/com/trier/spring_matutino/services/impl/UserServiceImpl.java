@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	private boolean validaUser(User user) {
-		if(user == null || user.getName().isBlank() || user.getEmail().isBlank() || user.getPassword().isBlank()) {
+		if(user == null || user.getName().isBlank() || user.getEmail().isBlank()) {
 			throw new ViolacaoDeIntegridade("Preencha os dados do usuário");
 		}  
 		return true;

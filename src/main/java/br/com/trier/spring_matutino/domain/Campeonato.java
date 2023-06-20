@@ -18,6 +18,11 @@ import lombok.Setter;
 @Entity
 public class Campeonato {
 	
+	/*
+	 * validar update para caso não encontre o campeonato solte um erro
+	 * um metodo que valida ano e outro que valida o campeonato, primeiro verificar se o campeonato é nulo e depois verificar demais campos
+	 */
+	
 	@Id
 	@Setter
 	@Column

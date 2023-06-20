@@ -18,6 +18,10 @@ import lombok.Setter;
 @Entity
 public class Equipe {
 
+	/*
+	 * validar update para caso não encontre o solte um erro
+	 */
+	
 	@Id
 	@Column
 	@Setter

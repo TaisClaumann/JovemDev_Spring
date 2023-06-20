@@ -1,5 +1,6 @@
 package br.com.trier.spring_matutino.domain;
 
+import br.com.trier.spring_matutino.domain.dto.UserDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,6 +19,10 @@ import lombok.Setter;
 @Entity (name = "usuario")
 public class User {
 	
+	/*
+	 * validar update para caso não encontre o solte um erro
+	 */
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Setter
@@ -32,4 +37,12 @@ public class User {
 	
 	@Column (name = "senha")
 	private String password;
+	
+	public User(UserDTO dto) { //dto p entity
+		this(dto.getId(), dto.getName(), dto.getEmail(), dto.getPassword());
+	}
+	
+	public UserDTO toDTO() { //entity p dto
+		return new UserDTO(this.id, this.name, this.email, this.password);
+	}
 }
