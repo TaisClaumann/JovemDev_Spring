@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.trier.spring_matutino.domain.Pais;
 import br.com.trier.spring_matutino.domain.Pista;
-import br.com.trier.spring_matutino.repositories.PaisRepository;
 import br.com.trier.spring_matutino.repositories.PistaRepository;
 import br.com.trier.spring_matutino.services.PistaService;
 import br.com.trier.spring_matutino.services.exceptions.ObjetoNaoEncontrado;
@@ -17,12 +16,12 @@ import br.com.trier.spring_matutino.services.exceptions.ViolacaoDeIntegridade;
 public class PistaServiceImpl implements PistaService{
 	
 	@Autowired
-	private PistaRepository repo;
+	private PistaRepository repository;
 
 	@Override
 	public Pista insert(Pista pista) {
 		validaPista(pista);
-		return repo.save(pista);
+		return repository.save(pista);
 	}
 	
 	private void validaPista(Pista pista) {
@@ -43,12 +42,12 @@ public class PistaServiceImpl implements PistaService{
 
 	@Override
 	public void delete(Integer id) {
-		repo.delete(findById(id));
+		repository.delete(findById(id));
 	}
 
 	@Override
 	public List<Pista> listAll() {
-		List<Pista> lista = repo.findAll();
+		List<Pista> lista = repository.findAll();
 		if(lista.size() == 0) {
 			throw new ObjetoNaoEncontrado("Não há pistas cadastradas");
 		}
@@ -57,12 +56,12 @@ public class PistaServiceImpl implements PistaService{
 
 	@Override
 	public Pista findById(Integer id) {
-		return repo.findById(id).orElseThrow(() -> new ObjetoNaoEncontrado("Pista id %s não existe".formatted(id)));
+		return repository.findById(id).orElseThrow(() -> new ObjetoNaoEncontrado("Pista id %s não existe".formatted(id)));
 	}
 
 	@Override
 	public List<Pista> findByTamanhoBetween(Integer tamInicial, Integer tamFinal) {
-		List<Pista> lista = repo.findByTamanhoBetween(tamInicial, tamFinal);
+		List<Pista> lista = repository.findByTamanhoBetween(tamInicial, tamFinal);
 		if(lista.size() == 0) {
 			throw new ObjetoNaoEncontrado("Nenhuma pista encontrada com os tamanhos %s e %s".formatted(tamInicial, tamFinal));
 		}
@@ -71,7 +70,7 @@ public class PistaServiceImpl implements PistaService{
 
 	@Override
 	public List<Pista> findByPaisOrderByTamanhoDesc(Pais pais) {
-		List<Pista> lista = repo.findByPaisOrderByTamanhoDesc(pais);
+		List<Pista> lista = repository.findByPaisOrderByTamanhoDesc(pais);
 		if(lista.size() == 0) {
 			throw new ObjetoNaoEncontrado("Não há pistas desse pais");
 		}

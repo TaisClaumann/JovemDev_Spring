@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import br.com.trier.spring_matutino.domain.Campeonato;
@@ -13,18 +12,17 @@ import br.com.trier.spring_matutino.repositories.CampeonatoRepository;
 import br.com.trier.spring_matutino.services.CampeonatoService;
 import br.com.trier.spring_matutino.services.exceptions.ObjetoNaoEncontrado;
 import br.com.trier.spring_matutino.services.exceptions.ViolacaoDeIntegridade;
-import io.micrometer.common.util.StringUtils;
 
 @Service
 public class CampeonatoServiceImpl implements CampeonatoService {
 
 	@Autowired
-	private CampeonatoRepository repo;
+	private CampeonatoRepository repository;
 
 	@Override
 	public Campeonato insert(Campeonato campeonato) {
 		validaCampeonato(campeonato);
-		return repo.save(campeonato);
+		return repository.save(campeonato);
 	}
 
 	private void validaCampeonato(Campeonato campeonato) {
@@ -57,7 +55,7 @@ public class CampeonatoServiceImpl implements CampeonatoService {
 
 	@Override
 	public List<Campeonato> listAll() {
-		List<Campeonato> campeonatos = repo.findAll();
+		List<Campeonato> campeonatos = repository.findAll();
 		if (campeonatos.size() == 0) {
 			throw new ObjetoNaoEncontrado("Não há campeonatos cadastrados");
 		}
@@ -66,25 +64,25 @@ public class CampeonatoServiceImpl implements CampeonatoService {
 
 	@Override
 	public Campeonato findById(Integer id) {
-		Optional<Campeonato> camp = repo.findById(id);
+		Optional<Campeonato> camp = repository.findById(id);
 		return camp.orElseThrow(() -> new ObjetoNaoEncontrado("Campeonato %s não encontrado".formatted(id)));
 	}
 
 	@Override
 	public void delete(Integer id) {
 		Campeonato camp = findById(id);
-		repo.delete(camp);
+		repository.delete(camp);
 	}
 
 	@Override
 	public Campeonato findByDescriptionEqualsIgnoreCase(String description) {
-		Optional<Campeonato> camp = repo.findByDescriptionEqualsIgnoreCase(description);
+		Optional<Campeonato> camp = repository.findByDescriptionEqualsIgnoreCase(description);
 		return camp.orElseThrow(() -> new ObjetoNaoEncontrado("Campeonato %s não encontrado".formatted(description)));
 	}
 
 	@Override
 	public List<Campeonato> findByAno(String ano) {
-		List<Campeonato> campeonatos = repo.findByAno(ano);
+		List<Campeonato> campeonatos = repository.findByAno(ano);
 		if (campeonatos.size() == 0) {
 			throw new ObjetoNaoEncontrado("Campeonato de %s não encontrado".formatted(ano));
 		}
@@ -93,7 +91,7 @@ public class CampeonatoServiceImpl implements CampeonatoService {
 
 	@Override
 	public List<Campeonato> findByAnoBetween(String anoInicial, String anoFinal) {
-		List<Campeonato> campeonatos = repo.findByAnoBetween(anoInicial, anoFinal);
+		List<Campeonato> campeonatos = repository.findByAnoBetween(anoInicial, anoFinal);
 		if (campeonatos.size() == 0) {
 			throw new ObjetoNaoEncontrado("Não há campeonatos entre %s e %s".formatted(anoInicial, anoFinal));
 		}
@@ -102,7 +100,7 @@ public class CampeonatoServiceImpl implements CampeonatoService {
 
 	@Override
 	public List<Campeonato> findByDescriptionContainsIgnoreCase(String description) {
-		List<Campeonato> campeonatos = repo.findByDescriptionContainsIgnoreCase(description);
+		List<Campeonato> campeonatos = repository.findByDescriptionContainsIgnoreCase(description);
 		if (campeonatos.size() == 0) {
 			throw new ObjetoNaoEncontrado("Campeonato %s não encontrado".formatted(description));
 		}
@@ -111,7 +109,7 @@ public class CampeonatoServiceImpl implements CampeonatoService {
 
 	@Override
 	public List<Campeonato> findByDescriptionContainsIgnoreCaseAndAnoEquals(String description, String ano) {
-		List<Campeonato> campeonatos = repo.findByDescriptionContainsIgnoreCaseAndAnoEquals(description, ano);
+		List<Campeonato> campeonatos = repository.findByDescriptionContainsIgnoreCaseAndAnoEquals(description, ano);
 		if (campeonatos.size() == 0) {
 			throw new ObjetoNaoEncontrado("Campeonato %s de %s não encontrado".formatted(description, ano));
 		}

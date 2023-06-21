@@ -31,6 +31,7 @@ public class CampeonatoResource {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Campeonato> update(@RequestBody Campeonato campeonato, @PathVariable Integer id){
+		campeonato.setId(id);
 		return ResponseEntity.ok(service.update(campeonato));
 	}
 	

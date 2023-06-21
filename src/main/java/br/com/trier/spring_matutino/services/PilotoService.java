@@ -13,7 +13,7 @@ public interface PilotoService {
 	void delete(Integer id);
 	List<Piloto> listAll();
 	Piloto findById(Integer id);
-	List<Piloto> findByNameContainsIgnoreCaseOrderByNome(String name);
+	List<Piloto> findByNomeContainsIgnoreCaseOrderByNome(String nome);
 	List<Piloto> findByPais(Pais pais);
 	List<Piloto> findByEquipe(Equipe equipe);
 }

@@ -1,4 +1,4 @@
-package br.com.trier.spring_matutino.resources;
+package br.com.trier.spring_matutino.ativ_math;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

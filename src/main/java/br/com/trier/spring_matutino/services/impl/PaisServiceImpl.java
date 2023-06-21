@@ -16,12 +16,12 @@ import br.com.trier.spring_matutino.services.exceptions.ViolacaoDeIntegridade;
 public class PaisServiceImpl implements PaisService{
 	
 	@Autowired
-	private PaisRepository repo;
+	private PaisRepository repository;
 	
 	@Override
 	public Pais insert(Pais pais) {
 		if(validaPais(pais)) {
-			Optional<Pais> paisOptional = repo.findByNameEqualsIgnoreCase(pais.getName());
+			Optional<Pais> paisOptional = repository.findByNameEqualsIgnoreCase(pais.getName());
 			if(paisOptional.isPresent()) {
 				Pais p = paisOptional.get();
 				if(p.getId() != pais.getId()) {
@@ -29,7 +29,7 @@ public class PaisServiceImpl implements PaisService{
 				}
 			}
 		}
-		return repo.save(pais);
+		return repository.save(pais);
 	}
 	
 	private boolean validaPais(Pais pais) {
@@ -52,12 +52,12 @@ public class PaisServiceImpl implements PaisService{
 	@Override
 	public void delete(Integer id) {
 		Pais pais = findById(id);
-		repo.delete(pais);
+		repository.delete(pais);
 	}
 
 	@Override
 	public List<Pais> listAll() {
-		List<Pais> paises = repo.findAll();
+		List<Pais> paises = repository.findAll();
 		if(paises.size()==0) {
 			throw new ObjetoNaoEncontrado("Não há paises cadastrados");
 		}
@@ -66,19 +66,19 @@ public class PaisServiceImpl implements PaisService{
 
 	@Override
 	public Pais findById(Integer id) {
-		Optional<Pais> pais = repo.findById(id);
+		Optional<Pais> pais = repository.findById(id);
 		return pais.orElseThrow(() -> new ObjetoNaoEncontrado("Pais %s não encontrado".formatted(id)));
 	}
 
 	@Override
 	public Pais findByNameEqualsIgnoreCase(String name) {
-		Optional<Pais> pais = repo.findByNameEqualsIgnoreCase(name);
+		Optional<Pais> pais = repository.findByNameEqualsIgnoreCase(name);
 		return pais.orElseThrow(() -> new ObjetoNaoEncontrado("Pais %s não encontrado".formatted(name)));
 	}
 
 	@Override
 	public List<Pais> findByNameContainsIgnoreCase(String name) {
-		List<Pais> paises = repo.findByNameContainsIgnoreCase(name);
+		List<Pais> paises = repository.findByNameContainsIgnoreCase(name);
 		if(paises.size()==0) {
 			throw new ObjetoNaoEncontrado("Não há paises com " + name);
 		}

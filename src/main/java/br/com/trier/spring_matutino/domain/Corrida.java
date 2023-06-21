@@ -1,5 +1,7 @@
 package br.com.trier.spring_matutino.domain;
 
+import java.time.ZonedDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,22 +16,21 @@ import lombok.Setter;
 
 @Entity
 @EqualsAndHashCode(of = "id")
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-public class Piloto {
-	
+public class Corrida {
+
 	@Id
-	@Column
 	@Setter
+	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column
-	private String nome;
+	private ZonedDateTime data;
 	
-	@ManyToOne()
-	private Pais pais;
-	@ManyToOne()
-	private Equipe equipe;
-
+	@ManyToOne
+	private Pista pista;
+	@ManyToOne
+	private Campeonato campeonato;
 }

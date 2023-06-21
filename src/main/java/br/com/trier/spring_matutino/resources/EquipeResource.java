@@ -30,6 +30,7 @@ public class EquipeResource {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Equipe> update(@RequestBody Equipe equipe, @PathVariable Integer id){
+		equipe.setId(id);
 		return ResponseEntity.ok(service.update(equipe));
 	}
 	

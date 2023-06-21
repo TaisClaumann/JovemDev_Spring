@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.trier.spring_matutino.domain.Equipe;
-import br.com.trier.spring_matutino.domain.Pais;
 import br.com.trier.spring_matutino.repositories.EquipeRepository;
 import br.com.trier.spring_matutino.services.EquipeService;
 import br.com.trier.spring_matutino.services.exceptions.ObjetoNaoEncontrado;
@@ -17,12 +16,12 @@ import br.com.trier.spring_matutino.services.exceptions.ViolacaoDeIntegridade;
 public class EquipeServiceImpl implements EquipeService{
 	
 	@Autowired
-	private EquipeRepository repo;
+	private EquipeRepository repository;
 
 	@Override
 	public Equipe insert(Equipe equipe) {
 		if(validaEquipe(equipe)) {
-			Optional<Equipe> equipeOptional = repo.findByName(equipe.getName());
+			Optional<Equipe> equipeOptional = repository.findByName(equipe.getName());
 			if(equipeOptional.isPresent()) {
 				Equipe e = equipeOptional.get();
 				if(equipe.getId() != e.getId()) {
@@ -30,7 +29,7 @@ public class EquipeServiceImpl implements EquipeService{
 				}
 			}
 		}
-		return repo.save(equipe);
+		return repository.save(equipe);
 	}
 
 	private boolean validaEquipe(Equipe equipe) {
@@ -52,19 +51,19 @@ public class EquipeServiceImpl implements EquipeService{
 
 	@Override
 	public Equipe findById(Integer id) {
-		Optional<Equipe> equipe = repo.findById(id);
+		Optional<Equipe> equipe = repository.findById(id);
 		return equipe.orElseThrow(() -> new ObjetoNaoEncontrado("Equipe %s não encontrada".formatted(id)));
 	}
 
 	@Override
 	public void delete(Integer id) {
 		Equipe equipe = findById(id);
-		repo.delete(equipe);
+		repository.delete(equipe);
 	}
 
 	@Override
 	public List<Equipe> listAll() {
-		List<Equipe> equipes = repo.findAll();
+		List<Equipe> equipes = repository.findAll();
 		if(equipes.size()==0) {
 			throw new ObjetoNaoEncontrado("Não há equipes cadastradas");
 		}
@@ -73,13 +72,13 @@ public class EquipeServiceImpl implements EquipeService{
 
 	@Override
 	public Equipe findByName(String name) {
-		Optional<Equipe> equipe = repo.findByName(name);
+		Optional<Equipe> equipe = repository.findByName(name);
 		return equipe.orElseThrow(() -> new ObjetoNaoEncontrado("Equipe %s não encontrada".formatted(name)));
 	}
 
 	@Override
 	public List<Equipe> findByNameContainsIgnoreCase(String name) {
-		List<Equipe> equipes = repo.findByNameContainsIgnoreCase(name);
+		List<Equipe> equipes = repository.findByNameContainsIgnoreCase(name);
 		if(equipes.size()==0) {
 			throw new ObjetoNaoEncontrado("Não há equipes com " + name);
 		}

@@ -12,7 +12,7 @@ import br.com.trier.spring_matutino.domain.Piloto;
 @Repository
 public interface PilotoRepository extends JpaRepository<Piloto, Integer>{
 	
-	List<Piloto> findByNameContainsIgnoreCaseOrderByNome(String name);
+	List<Piloto> findByNomeContainsIgnoreCaseOrderByNome(String name);
 	List<Piloto> findByPais(Pais pais);
 	List<Piloto> findByEquipe(Equipe equipe);
 

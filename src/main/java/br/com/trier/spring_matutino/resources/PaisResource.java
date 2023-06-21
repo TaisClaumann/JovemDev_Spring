@@ -30,6 +30,7 @@ public class PaisResource {
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Pais> update(@PathVariable Integer id, @RequestBody Pais pais){
+		pais.setId(id);
 		return ResponseEntity.ok(service.update(pais));
 	}
 	

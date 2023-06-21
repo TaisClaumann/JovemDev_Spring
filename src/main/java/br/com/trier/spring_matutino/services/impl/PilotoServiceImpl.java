@@ -17,7 +17,7 @@ import br.com.trier.spring_matutino.services.exceptions.ViolacaoDeIntegridade;
 public class PilotoServiceImpl implements PilotoService{
 
 	@Autowired
-	PilotoRepository repository;
+	private PilotoRepository repository;
 	
 	@Override
 	public Piloto insert(Piloto piloto) {
@@ -56,26 +56,33 @@ public class PilotoServiceImpl implements PilotoService{
 
 	@Override
 	public Piloto findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findById(id).orElseThrow(() -> new ObjetoNaoEncontrado("Piloto id %s não existe".formatted(id)));
 	}
 
 	@Override
-	public List<Piloto> findByNameContainsIgnoreCaseOrderByNome(String name) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Piloto> findByNomeContainsIgnoreCaseOrderByNome(String nome) {
+		List<Piloto> pilotos = repository.findByNomeContainsIgnoreCaseOrderByNome(nome);
+		if(pilotos.size() == 0) {
+			throw new ObjetoNaoEncontrado("Não há pilotos com " + nome);
+		}
+		return pilotos;
 	}
 
 	@Override
 	public List<Piloto> findByPais(Pais pais) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Piloto> pilotos = repository.findByPais(pais);
+		if(pilotos.size() == 0) {
+			throw new ObjetoNaoEncontrado("Não há pilotos do(a) " + pais.getName());
+		}
+		return pilotos;
 	}
 
 	@Override
 	public List<Piloto> findByEquipe(Equipe equipe) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Piloto> pilotos = repository.findByEquipe(equipe);
+		if(pilotos.size() == 0) {
+			throw new ObjetoNaoEncontrado("Não há pilotos do(a) equipe " + equipe.getName());
+		}
+		return pilotos;
 	}
-
 }
