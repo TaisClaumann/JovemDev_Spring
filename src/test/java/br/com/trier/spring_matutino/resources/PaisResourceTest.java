@@ -36,19 +36,19 @@ public class PaisResourceTest {
 	@Autowired
 	protected TestRestTemplate rest;
 	
-	private ResponseEntity<Pais> getPais(String url) { //converte o json
+	private ResponseEntity<Pais> getPais(String url) {
 		return rest.getForEntity(url, Pais.class);
 	}
 	
 	@SuppressWarnings("unused")
-	private ResponseEntity<List<Pais>> getPaises(String url) {//conversão mais de um usuário
+	private ResponseEntity<List<Pais>> getPaises(String url) {
 		return rest.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Pais>>() {
 		});
 	}
 
 	@Test
 	@DisplayName("Teste inserir pais")
-	@Sql(executionPhase=ExecutionPhase.AFTER_TEST_METHOD,scripts="classpath:/resources/sqls/limpa_tabelas.sql")
+	@Sql({"classpath:/resources/sqls/limpa_tabelas.sql"})
 	void insertTest() {
 		Pais pais = new Pais(null, "teste");
 		HttpHeaders headers = new HttpHeaders();

@@ -36,12 +36,12 @@ public class EquipeResourceTest {
 	@Autowired
 	protected TestRestTemplate rest;
 	
-	private ResponseEntity<Equipe> getEquipe(String url) { //converte o json
+	private ResponseEntity<Equipe> getEquipe(String url) {
 		return rest.getForEntity(url, Equipe.class);
 	}
 	
 	@SuppressWarnings("unused")
-	private ResponseEntity<List<Equipe>> getEquipes(String url) {//conversão mais de um usuário
+	private ResponseEntity<List<Equipe>> getEquipes(String url) {
 		return rest.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Equipe>>() {
 		});
 	}

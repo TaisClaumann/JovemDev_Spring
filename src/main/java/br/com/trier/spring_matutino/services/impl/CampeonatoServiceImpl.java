@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import br.com.trier.spring_matutino.domain.Campeonato;
@@ -22,16 +23,11 @@ public class CampeonatoServiceImpl implements CampeonatoService {
 
 	@Override
 	public Campeonato insert(Campeonato campeonato) {
-		int anoAtual = LocalDate.now().getYear();
-		if (validaCampeonato(campeonato)) {
-			if (Integer.parseInt(campeonato.getAno()) < 1990 || Integer.parseInt(campeonato.getAno()) > anoAtual) {
-				throw new ViolacaoDeIntegridade("O ano precisa ser maior que 1990 e menor que 2023");
-			}
-		}
+		validaCampeonato(campeonato);
 		return repo.save(campeonato);
 	}
 
-	private boolean validaCampeonato(Campeonato campeonato) {
+	private void validaCampeonato(Campeonato campeonato) {
 		if (campeonato == null) {
 			throw new ViolacaoDeIntegridade("O campeonato está nulo");
 		} else if (campeonato.getDescription() == null || campeonato.getDescription().isBlank()) {
@@ -39,7 +35,16 @@ public class CampeonatoServiceImpl implements CampeonatoService {
 		} else if (campeonato.getAno() == null || campeonato.getAno().isBlank()) {
 			throw new ViolacaoDeIntegridade("O ano está vazio");
 		}
-		return true;
+		validaAno(campeonato.getAno());
+	}
+	
+	private void validaAno(String ano) {
+		int anoAtual = LocalDate.now().getYear();
+		int anoInserido = Integer.parseInt(ano);
+		
+		if (anoInserido < 1990 || anoInserido > anoAtual) {
+			throw new ViolacaoDeIntegridade("O ano precisa ser maior que 1990 e menor que 2023");
+		}
 	}
 
 	@Override

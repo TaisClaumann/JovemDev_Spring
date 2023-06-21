@@ -35,12 +35,12 @@ public class CampeonatoResourceTest {
 	@Autowired
 	protected TestRestTemplate rest;
 	
-	private ResponseEntity<Campeonato> getCampeonato(String url) { //converte o json
+	private ResponseEntity<Campeonato> getCampeonato(String url) {
 		return rest.getForEntity(url, Campeonato.class);
 	}
 	
 	@SuppressWarnings("unused")
-	private ResponseEntity<List<Campeonato>> getCampeonatos(String url) {//conversão mais de um usuário
+	private ResponseEntity<List<Campeonato>> getCampeonatos(String url) {
 		return rest.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Campeonato>>() {
 		});
 	}
