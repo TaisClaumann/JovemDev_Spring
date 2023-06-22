@@ -43,11 +43,11 @@ public class CorridaServiceTest extends BaseTests{
 	@Sql({"classpath:/resources/sqls/pais.sql"})
 	@Sql({"classpath:/resources/sqls/pista.sql"})
 	void insertInvalidTest() {
-		ZonedDateTime data = ZonedDateTime.parse("2023-05-14T12:34:00Z");
+		ZonedDateTime data = ZonedDateTime.parse("2022-05-14T12:34:00Z");
 		var corrida = new Corrida(null, data, new Pista(1, null, null), new Campeonato(1, null, "2023"));
 
 		var exception = assertThrows(ViolacaoDeIntegridade.class, () -> service.insert(corrida));
-		assertEquals("A data precisa ser posterior a data atual", exception.getMessage());
+		assertEquals("O ano da corrida precisa ser igual ao ano do campeonato", exception.getMessage());
 		
 		var corrida2 = new Corrida(null, null, new Pista(1, null, null), new Campeonato(1, null, "2023"));
 		var exception2 = assertThrows(ViolacaoDeIntegridade.class, () -> service.insert(corrida2));

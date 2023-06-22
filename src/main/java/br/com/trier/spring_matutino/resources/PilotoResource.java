@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.trier.spring_matutino.domain.Piloto;
+import br.com.trier.spring_matutino.domain.dto.PilotoDTO;
 import br.com.trier.spring_matutino.services.EquipeService;
 import br.com.trier.spring_matutino.services.PaisService;
 import br.com.trier.spring_matutino.services.PilotoService;
@@ -24,26 +25,25 @@ public class PilotoResource {
 	
 	@Autowired
 	private PilotoService service;
-	
 	@Autowired
 	private EquipeService equipeService;
-	
 	@Autowired
 	private PaisService paisService;
 	
 	@PostMapping
-	public ResponseEntity<Piloto> insert(@RequestBody Piloto piloto){
-		equipeService.findById(piloto.getEquipe().getId());
-		paisService.findById(piloto.getPais().getId());
-		return ResponseEntity.ok(service.insert(piloto));
+	public ResponseEntity<PilotoDTO> insert(@RequestBody PilotoDTO pilotoDTO){
+		equipeService.findById(pilotoDTO.getEquipeId());
+		paisService.findById(pilotoDTO.getPaisId());
+		return ResponseEntity.ok(service.insert(new Piloto(pilotoDTO)).toDTO());
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Piloto> update(@RequestBody Piloto piloto, @PathVariable Integer id){
-		equipeService.findById(piloto.getEquipe().getId());
-		paisService.findById(piloto.getPais().getId());
+	public ResponseEntity<PilotoDTO> update(@RequestBody PilotoDTO pilotoDTO, @PathVariable Integer id){
+		equipeService.findById(pilotoDTO.getEquipeId());
+		paisService.findById(pilotoDTO.getPaisId());
+		Piloto piloto = new Piloto(pilotoDTO);
 		piloto.setId(id);
-		return ResponseEntity.ok(service.update(piloto));
+		return ResponseEntity.ok(service.update(piloto).toDTO());
 	}
 
 	@DeleteMapping("/{id}")
@@ -53,27 +53,33 @@ public class PilotoResource {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Piloto>> listAll(){
-		return ResponseEntity.ok(service.listAll());
+	public ResponseEntity<List<PilotoDTO>> listAll(){
+		return ResponseEntity.ok(service.listAll().stream().map((piloto) -> piloto.toDTO()).toList());
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Piloto> findById(@PathVariable Integer id){
-		return ResponseEntity.ok(service.findById(id));
+	public ResponseEntity<PilotoDTO> findById(@PathVariable Integer id){
+		return ResponseEntity.ok(service.findById(id).toDTO());
 	}
 	
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<List<Piloto>> findByNomeContainsIgnoreCaseOrderByNome(@PathVariable String nome){
-		return ResponseEntity.ok(service.findByNomeContainsIgnoreCaseOrderByNome(nome));
+	public ResponseEntity<List<PilotoDTO>> findByNomeContainsIgnoreCaseOrderByNome(@PathVariable String nome){
+		return ResponseEntity.ok(service.findByNomeContainsIgnoreCaseOrderByNome(nome).stream()
+																					  .map((piloto) -> piloto.toDTO())
+																					  .toList());
 	}
 	
 	@GetMapping("/pais/{idPais}")
-	public ResponseEntity<List<Piloto>> findByPais(@PathVariable Integer id){
-		return ResponseEntity.ok(service.findByPais(paisService.findById(id)));
+	public ResponseEntity<List<PilotoDTO>> findByPais(@PathVariable Integer id){
+		return ResponseEntity.ok(service.findByPais(paisService.findById(id)).stream()
+																			 .map((piloto) -> piloto.toDTO())
+																			 .toList());
 	}
 	
 	@GetMapping("/equipe/{idEquipe}")
-	public ResponseEntity<List<Piloto>> findByEquipe(@PathVariable Integer id){
-		return ResponseEntity.ok(service.findByEquipe(equipeService.findById(id)));
+	public ResponseEntity<List<PilotoDTO>> findByEquipe(@PathVariable Integer id){
+		return ResponseEntity.ok(service.findByEquipe(equipeService.findById(id)).stream()
+																			     .map((piloto) -> piloto.toDTO())
+																			     .toList());
 	}
 }
