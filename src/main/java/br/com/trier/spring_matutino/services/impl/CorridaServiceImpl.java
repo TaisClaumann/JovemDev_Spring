@@ -33,12 +33,13 @@ public class CorridaServiceImpl implements CorridaService{
 		} else if(corrida.getData() == null) {
 			throw new ViolacaoDeIntegridade("A data está nula");
 		}
-		validaData(corrida.getData());
+		validaData(corrida);
 	}
 	
-	private void validaData(ZonedDateTime data) {
-		if(data.isBefore(ZonedDateTime.now())) {
-			throw new ViolacaoDeIntegridade("A data precisa ser posterior a data atual");
+	private void validaData(Corrida corrida) {
+		int anoCampeonato = Integer.parseInt(corrida.getCampeonato().getAno());
+		if(corrida.getData().getYear() != anoCampeonato) {
+			throw new ViolacaoDeIntegridade("O ano da corrida precisa ser igual ao ano do campeonato");
 		}
 	}
 	

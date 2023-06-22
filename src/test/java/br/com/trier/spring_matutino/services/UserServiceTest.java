@@ -84,6 +84,10 @@ public class UserServiceTest extends BaseTests{
 		User user = new User(null, "", "", "");
 		var exception = assertThrows(ViolacaoDeIntegridade.class, () -> service.insert(user));
 		assertEquals("O nome está vazio", exception.getMessage());
+		
+		User user2 = new User(null, "teste", "", "");
+		var exception2 = assertThrows(ViolacaoDeIntegridade.class, () -> service.insert(user2));
+		assertEquals("O email está vazio", exception2.getMessage());
 	}
 	
 	@Test
@@ -120,6 +124,15 @@ public class UserServiceTest extends BaseTests{
 		User user = new User(2, "Usuario Test 2", "test@teste.com.br", "123");
 		var exception = assertThrows(ViolacaoDeIntegridade.class, () -> service.update(user));
 		assertEquals("Esse email já existe", exception.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Teste alterar usuario inexistente")
+	@Sql({"classpath:/resources/sqls/usuario.sql"})
+	void updateInvalidTest() {
+		User user = new User(5, "Usuario Test 2", "test@teste.com.br", "123");
+		var exception = assertThrows(ObjetoNaoEncontrado.class, () -> service.update(user));
+		assertEquals("Esse usuário não existe", exception.getMessage());
 	}
 	
 	@Test

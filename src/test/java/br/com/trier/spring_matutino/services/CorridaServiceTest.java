@@ -32,7 +32,7 @@ public class CorridaServiceTest extends BaseTests{
 	@Sql({"classpath:/resources/sqls/pista.sql"})
 	void insertTest() {
 		ZonedDateTime data = ZonedDateTime.parse("2023-09-14T12:34:00Z");
-		var corrida = new Corrida(null, data, new Pista(1, null, null), new Campeonato(1, null, null));
+		var corrida = new Corrida(null, data, new Pista(1, null, null), new Campeonato(1, null, "2023"));
 		service.insert(corrida);
 		assertEquals(1, service.listAll().size());
 	}
@@ -44,12 +44,12 @@ public class CorridaServiceTest extends BaseTests{
 	@Sql({"classpath:/resources/sqls/pista.sql"})
 	void insertInvalidTest() {
 		ZonedDateTime data = ZonedDateTime.parse("2023-05-14T12:34:00Z");
-		var corrida = new Corrida(null, data, new Pista(1, null, null), new Campeonato(1, null, null));
+		var corrida = new Corrida(null, data, new Pista(1, null, null), new Campeonato(1, null, "2023"));
 
 		var exception = assertThrows(ViolacaoDeIntegridade.class, () -> service.insert(corrida));
 		assertEquals("A data precisa ser posterior a data atual", exception.getMessage());
 		
-		var corrida2 = new Corrida(null, null, new Pista(1, null, null), new Campeonato(1, null, null));
+		var corrida2 = new Corrida(null, null, new Pista(1, null, null), new Campeonato(1, null, "2023"));
 		var exception2 = assertThrows(ViolacaoDeIntegridade.class, () -> service.insert(corrida2));
 		assertEquals("A data está nula", exception2.getMessage());
 	}
@@ -62,7 +62,7 @@ public class CorridaServiceTest extends BaseTests{
 	@Sql({"classpath:/resources/sqls/corrida.sql"})
 	void updateTest() {
 		ZonedDateTime data = ZonedDateTime.parse("2023-10-14T12:34:00Z");
-		var corrida = new Corrida(1, data, new Pista(1, null, null), new Campeonato(1, null, null));
+		var corrida = new Corrida(1, data, new Pista(1, null, null), new Campeonato(1, null, "2023"));
 		service.update(corrida);
 		assertEquals(data, service.findById(1).getData());
 	}
