@@ -21,6 +21,18 @@ import lombok.Setter;
 @Entity(name = "piloto_corrida")
 public class PilotoCorrida {
 	
+	/*
+	 * Buscar pilotos por colocação
+	 * Buscar colocacões
+	 * Buscar pilotos por corrida ordenando pela colocação
+	 * Buscar o podio de uma corrida
+	 */
+	
+	/*
+	 * Todas as corridas de um pais em um ano(id pais e ano)
+	 */
+	
+	
 	@Id
 	@Column
 	@Setter
@@ -31,14 +43,7 @@ public class PilotoCorrida {
 	@ManyToOne
 	private Corrida corrida;
 	@Column
-	private String colocacao;
-	
-	public PilotoCorrida(PilotoCorridaDTO dto) {
-		this(dto.getId(), 
-			 new Piloto(dto.getPilotoId(), dto.getPilotoNome(), null, null),
-			 new Corrida(dto.getCorridaId(), DateUtils.strToZonedDateTime(dto.getCorridaData()), null, null),
-			 dto.getColocacao());
-	}
+	private Integer colocacao;
 	
 	public PilotoCorridaDTO toDTO() {
 		return new PilotoCorridaDTO(id, 

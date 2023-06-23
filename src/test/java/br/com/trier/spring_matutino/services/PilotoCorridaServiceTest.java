@@ -29,7 +29,7 @@ public class PilotoCorridaServiceTest extends BaseTests{
 		var pilotoCorrida = new PilotoCorrida(null, 
 											  new Piloto(1, null, null, null), 
 											  new Corrida(1, null, null, null), 
-											  "Primeiro");
+											  1);
 		service.insert(pilotoCorrida);
 		assertEquals(1, service.listAll().size());
 	}
@@ -41,9 +41,9 @@ public class PilotoCorridaServiceTest extends BaseTests{
 		var pilotoCorrida = new PilotoCorrida(null, 
 											  new Piloto(1, null, null, null), 
 											  new Corrida(1, null, null, null), 
-											  null);
-		var exception = assertThrows(ViolacaoDeIntegridade.class, () -> service.insert(null));
-		assertEquals("O cadastro não pode ser nulo", exception.getMessage());
+											  0);
+		var exception = assertThrows(ViolacaoDeIntegridade.class, () -> service.insert(pilotoCorrida));
+		assertEquals("A colocação não pode ser nula ou igual a 0", exception.getMessage());
 	}
 	
 	@Test
@@ -54,9 +54,9 @@ public class PilotoCorridaServiceTest extends BaseTests{
 		var pilotoCorrida = new PilotoCorrida(1, 
 											  new Piloto(1, null, null, null), 
 											  new Corrida(1, null, null, null), 
-											  "Teste");
+											  3);
 		service.update(pilotoCorrida);
-		assertEquals("Teste", service.listAll().get(0).getColocacao());
+		assertEquals(3, service.listAll().get(0).getColocacao());
 	}
 	
 	@Test
@@ -67,7 +67,7 @@ public class PilotoCorridaServiceTest extends BaseTests{
 		var pilotoCorrida = new PilotoCorrida(10, 
 											  new Piloto(1, null, null, null), 
 											  new Corrida(1, null, null, null), 
-											  "Teste");
+											  3);
 		var exception = assertThrows(ObjetoNaoEncontrado.class, () -> service.update(pilotoCorrida));
 		assertEquals("Esse cadastro não existe", exception.getMessage());
 	}
@@ -103,7 +103,7 @@ public class PilotoCorridaServiceTest extends BaseTests{
 	@Sql({"classpath:/resources/sqls/piloto_corrida.sql"})
 	void findByIdTest() {
 		var pilotoCorrida = service.findById(1);
-		assertEquals("Primeiro Lugar", pilotoCorrida.getColocacao());
+		assertEquals(1, pilotoCorrida.getColocacao());
 		assertEquals(1, pilotoCorrida.getPiloto().getId());
 	}
 	
@@ -154,5 +154,16 @@ public class PilotoCorridaServiceTest extends BaseTests{
 	void findByCorridaNotFoundTest() {
 		var exception = assertThrows(ObjetoNaoEncontrado.class, () -> service.findByCorrida(new Corrida(4, null, null, null)));
 		assertEquals("Não há pilotos nessa corrida", exception.getMessage());
+	}
+	
+	@Test
+	@DisplayName("Teste buscar os pilotos de uma corrida ordenados pela colocacao")
+	@Sql({"classpath:/resources/sqls/banco_dados.sql"})
+	@Sql({"classpath:/resources/sqls/piloto_corrida.sql"})
+	void findByCorridaOrderByColocacaoAscTest() {
+		var corridaPilotos = service.findByCorridaOrderByColocacaoAsc(new Corrida(1, null, null, null));
+		assertEquals(3, corridaPilotos.size());
+		assertEquals(1, corridaPilotos.get(0).getPiloto().getId());
+		assertEquals(3, corridaPilotos.get(1).getPiloto().getId());
 	}
 }

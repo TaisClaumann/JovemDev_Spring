@@ -4,15 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-public class PilotoCorridaDTO {
-	
-	private Integer id;
+public class PilotoPaisDTO {
+
 	private Integer pilotoId;
 	private String pilotoNome;
-	private Integer corridaId;
-	private String corridaData;
+	private Integer equipeId;
+	private String equipeNome;
 	private Integer colocacao;
 }

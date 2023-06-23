@@ -23,7 +23,7 @@ import jakarta.transaction.Transactional;
 public class PilotoServiceTest extends BaseTests{
 
 	@Autowired
-	private PilotoServiceImpl service;
+	private PilotoService service;
 	
 	@Test
 	@Sql({"classpath:/resources/sqls/pais.sql"})

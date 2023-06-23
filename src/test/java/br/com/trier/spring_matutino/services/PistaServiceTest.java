@@ -21,7 +21,7 @@ import jakarta.transaction.Transactional;
 public class PistaServiceTest extends BaseTests{
 	
 	@Autowired
-	PistaServiceImpl service;
+	PistaService service;
 
 	@Test
 	@DisplayName("Teste inserir pista")

@@ -28,8 +28,8 @@ public class PilotoCorridaServiceImpl implements PilotoCorridaService{
 	private void validaInsert(PilotoCorrida pilotoCorrida) {
 		if(pilotoCorrida == null) {
 			throw new ViolacaoDeIntegridade("O cadastro não pode ser nulo");
-		} else if(pilotoCorrida.getColocacao() == null || pilotoCorrida.getColocacao().isBlank()) {
-			throw new ViolacaoDeIntegridade("Preencha a colocação");
+		} else if(pilotoCorrida.getColocacao() == null || pilotoCorrida.getColocacao() == 0) {
+			throw new ViolacaoDeIntegridade("A colocação não pode ser nula ou igual a 0");
 		}
 	}
 
@@ -76,4 +76,11 @@ public class PilotoCorridaServiceImpl implements PilotoCorridaService{
 		return repository.findByCorrida(corrida);
 	}
 
+	@Override
+	public List<PilotoCorrida> findByCorridaOrderByColocacaoAsc(Corrida corrida) {
+		if(repository.findByCorridaOrderByColocacaoAsc(corrida).size() == 0) {
+			throw new ObjetoNaoEncontrado("Não há pilotos nessa corrida");
+		}
+		return repository.findByCorridaOrderByColocacaoAsc(corrida);
+	}
 }

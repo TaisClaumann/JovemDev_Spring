@@ -81,4 +81,12 @@ public class PilotoCorridaResource {
 																	   .map((pilotoCorrida) -> pilotoCorrida.toDTO())
 																	   .toList());
 	}
+	
+	@GetMapping("/corrida_colocacao/{corridaId}")
+	public ResponseEntity<List<PilotoCorridaDTO>> findByCorridaOrderByColocacaoAsc(@PathVariable Integer corridaId){
+		return ResponseEntity.ok(service.findByCorridaOrderByColocacaoAsc(
+									corridaService.findById(corridaId)).stream()
+												   					   .map(pilotoCorrida -> pilotoCorrida.toDTO())
+												                       .toList());
+	}
 }

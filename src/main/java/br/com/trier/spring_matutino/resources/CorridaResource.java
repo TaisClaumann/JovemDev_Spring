@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.trier.spring_matutino.domain.Campeonato;
@@ -66,8 +67,8 @@ public class CorridaResource {
 		return ResponseEntity.ok(corrida.toDTO());
 	}
 	
-	@GetMapping("/data/{data}")
-	public ResponseEntity<List<CorridaDTO>> findByData(@PathVariable String data){
+	@GetMapping("/data")
+	public ResponseEntity<List<CorridaDTO>> findByData(@RequestParam String data){
 		return ResponseEntity.ok(service.findByData(DateUtils.strToZonedDateTime(data)).stream()
 																			   .map((corrida) -> corrida.toDTO())
 																			   .toList());

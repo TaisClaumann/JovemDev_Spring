@@ -15,4 +15,5 @@ public interface PilotoCorridaService {
 	PilotoCorrida findById(Integer id);
 	List<PilotoCorrida> findByPiloto(Piloto piloto);
 	List<PilotoCorrida> findByCorrida(Corrida corrida);
+	List<PilotoCorrida> findByCorridaOrderByColocacaoAsc(Corrida corrida);
 }

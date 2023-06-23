@@ -16,6 +16,7 @@ import br.com.trier.spring_matutino.ativ_dado.exceptions.ValorInvalidoException;
 import br.com.trier.spring_matutino.domain.User;
 import br.com.trier.spring_matutino.services.exceptions.ObjetoNaoEncontrado;
 import br.com.trier.spring_matutino.services.exceptions.ViolacaoDeIntegridade;
+import br.com.trier.spring_matutino.services.impl.UserServiceImpl;
 import jakarta.transaction.Transactional;
 
 @Transactional

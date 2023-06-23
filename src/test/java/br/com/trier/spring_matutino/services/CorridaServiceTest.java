@@ -23,7 +23,7 @@ import jakarta.transaction.Transactional;
 public class CorridaServiceTest extends BaseTests{
 	
 	@Autowired
-	private CorridaServiceImpl service;
+	private CorridaService service;
 	
 	@Test
 	@DisplayName("Teste inserir corrida")

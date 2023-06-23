@@ -1,18 +1,19 @@
 package br.com.trier.spring_matutino.domain.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-public class PilotoCorridaDTO {
+public class PilotoCorridaPaisDTO {
 	
-	private Integer id;
-	private Integer pilotoId;
-	private String pilotoNome;
+	private Integer paisID;
+	private String paisNome;
 	private Integer corridaId;
-	private String corridaData;
-	private Integer colocacao;
+	private List<PilotoPaisDTO> pilotosPais = new ArrayList<>();
 }
