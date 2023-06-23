@@ -21,18 +21,6 @@ import lombok.Setter;
 @Entity(name = "piloto_corrida")
 public class PilotoCorrida {
 	
-	/*
-	 * Buscar pilotos por colocação
-	 * Buscar colocacões
-	 * Buscar pilotos por corrida ordenando pela colocação
-	 * Buscar o podio de uma corrida
-	 */
-	
-	/*
-	 * Todas as corridas de um pais em um ano(id pais e ano)
-	 */
-	
-	
 	@Id
 	@Column
 	@Setter

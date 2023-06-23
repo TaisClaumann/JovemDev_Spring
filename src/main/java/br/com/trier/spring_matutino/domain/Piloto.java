@@ -20,10 +20,6 @@ import lombok.Setter;
 @Getter
 public class Piloto {
 	
-	/*
-	 * alterar nome para name
-	 */
-	
 	@Id
 	@Column
 	@Setter

@@ -62,8 +62,8 @@ public class PistaResource {
 	}
 	
 	@GetMapping("/pais/{idPais}")
-	public ResponseEntity<List<Pista>> findByPaisOrderByTamanhoDesc(@PathVariable Integer id){
-		return ResponseEntity.ok(service.findByPaisOrderByTamanhoDesc(paisService.findById(id)));
+	public ResponseEntity<List<Pista>> findByPaisOrderByTamanhoDesc(@PathVariable Integer idPais){
+		return ResponseEntity.ok(service.findByPaisOrderByTamanhoDesc(paisService.findById(idPais)));
 	}
 	
 }

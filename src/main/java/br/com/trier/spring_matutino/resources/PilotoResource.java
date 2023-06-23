@@ -70,15 +70,15 @@ public class PilotoResource {
 	}
 	
 	@GetMapping("/pais/{idPais}")
-	public ResponseEntity<List<PilotoDTO>> findByPais(@PathVariable Integer id){
-		return ResponseEntity.ok(service.findByPais(paisService.findById(id)).stream()
+	public ResponseEntity<List<PilotoDTO>> findByPais(@PathVariable Integer idPais){
+		return ResponseEntity.ok(service.findByPais(paisService.findById(idPais)).stream()
 																			 .map((piloto) -> piloto.toDTO())
 																			 .toList());
 	}
 	
 	@GetMapping("/equipe/{idEquipe}")
-	public ResponseEntity<List<PilotoDTO>> findByEquipe(@PathVariable Integer id){
-		return ResponseEntity.ok(service.findByEquipe(equipeService.findById(id)).stream()
+	public ResponseEntity<List<PilotoDTO>> findByEquipe(@PathVariable Integer idEquipe){
+		return ResponseEntity.ok(service.findByEquipe(equipeService.findById(idEquipe)).stream()
 																			     .map((piloto) -> piloto.toDTO())
 																			     .toList());
 	}
