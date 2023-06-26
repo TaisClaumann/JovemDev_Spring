@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +31,7 @@ public class PilotoCorridaResource {
 	@Autowired
 	private PilotoService pilotoService;
 	
+	@Secured({"ROLE_ADMIN_USER"})
 	@PostMapping
 	public ResponseEntity<PilotoCorridaDTO> insert(@RequestBody PilotoCorridaDTO pilotoCorridaDTO){
 		return ResponseEntity.ok(service.insert(new PilotoCorrida(
@@ -38,6 +40,7 @@ public class PilotoCorridaResource {
 													corridaService.findById(pilotoCorridaDTO.getCorridaId()))).toDTO());
 	}
 	
+	@Secured({"ROLE_ADMIN_USER"})
 	@PutMapping("/{id}")
 	public ResponseEntity<PilotoCorridaDTO> update(@RequestBody PilotoCorridaDTO pilotoCorridaDTO, @PathVariable Integer id){
 		PilotoCorrida piloto = new PilotoCorrida(
@@ -48,12 +51,14 @@ public class PilotoCorridaResource {
 		return ResponseEntity.ok(service.update(piloto).toDTO());
 	}
 	
+	@Secured({"ROLE_ADMIN_USER"})
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		service.delete(id);
 		return ResponseEntity.ok().build();
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping
 	public ResponseEntity<List<PilotoCorridaDTO>> listAll(){
 		return ResponseEntity.ok(service.listAll().stream()
@@ -61,11 +66,13 @@ public class PilotoCorridaResource {
 											      .toList());
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping("/{id}")
 	public ResponseEntity<PilotoCorridaDTO> findById(@PathVariable Integer id){
 		return ResponseEntity.ok(service.findById(id).toDTO());
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping("/piloto/{pilotoId}")
 	public ResponseEntity<List<PilotoCorridaDTO>> findByPiloto(@PathVariable Integer pilotoId){
 		return ResponseEntity.ok(service.findByPiloto(
@@ -74,6 +81,7 @@ public class PilotoCorridaResource {
 																	 .toList());
 	}
 
+	@Secured({"ROLE_USER"})
 	@GetMapping("/corrida/{corridaId}")
 	public ResponseEntity<List<PilotoCorridaDTO>> findByCorrida(@PathVariable Integer corridaId){
 		return ResponseEntity.ok(service.findByCorrida(
@@ -82,6 +90,7 @@ public class PilotoCorridaResource {
 																	   .toList());
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping("/corrida_colocacao/{corridaId}")
 	public ResponseEntity<List<PilotoCorridaDTO>> findByCorridaOrderByColocacaoAsc(@PathVariable Integer corridaId){
 		return ResponseEntity.ok(service.findByCorridaOrderByColocacaoAsc(

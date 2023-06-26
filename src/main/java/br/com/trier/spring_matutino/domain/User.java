@@ -34,11 +34,14 @@ public class User {
 	@Column (name = "senha")
 	private String password;
 	
+	@Column (name = "permissoes")
+	private String roles;
+	
 	public User(UserDTO dto) { //dto p entity
-		this(dto.getId(), dto.getName(), dto.getEmail(), dto.getPassword());
+		this(dto.getId(), dto.getName(), dto.getEmail(), dto.getPassword(), dto.getRoles());
 	}
 	
 	public UserDTO toDTO() { //entity p dto
-		return new UserDTO(this.id, this.name, this.email, this.password);
+		return new UserDTO(this.id, this.name, this.email, this.password, this.roles);
 	}
 }

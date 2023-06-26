@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +43,7 @@ public class RelatorioResource {
 	@Autowired
 	private PilotoService pilotoService;
 
+	@Secured({"ROLE_USER"})
 	@GetMapping("/corridas_by_ano_pais/{anoCorrida}/{paisId}")
 	public ResponseEntity<CorridaPaisAnoDTO> findCorridaByPaisAndAno(@PathVariable Integer anoCorrida, @PathVariable Integer paisId){
 		Pais pais = paisService.findById(paisId);
@@ -60,6 +62,7 @@ public class RelatorioResource {
 		return ResponseEntity.ok(new CorridaPaisAnoDTO(anoCorrida, pais.getName(), corridasDTO));
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping("/pilotos_by_pais_by_corrida/{corridaId}/{paisId}")
 	public ResponseEntity<PilotoCorridaPaisDTO> findPilotoByPaisAndCorrida(@PathVariable Integer corridaId, @PathVariable Integer paisId){
 		Corrida corrida = corridaService.findById(corridaId);
@@ -80,6 +83,7 @@ public class RelatorioResource {
 		return ResponseEntity.ok(new PilotoCorridaPaisDTO(paisId, pais.getName(), corridaId, pilotosPais));
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping("/total_pilotos_pais_by_corrida/{corridaId}/{paisId}")
 	public ResponseEntity<TotalPilotoPaisCorridaDTO> findTotalPilotosByPaisAndCorrida(@PathVariable Integer corridaId, @PathVariable Integer paisId){
 		Corrida corrida = corridaService.findById(corridaId);

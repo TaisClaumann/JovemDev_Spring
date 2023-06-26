@@ -64,7 +64,7 @@ public class UserServiceTest extends BaseTests{
 	@Test
 	@DisplayName("Teste salvar usuario")
 	void insertTest() {
-		User user = new User(null, "Usuario Test 3", "test3@teste.com.br", "123");
+		User user = new User(null, "Usuario Test 3", "test3@teste.com.br", "123", "ADMIN");
 		service.insert(user);
 		List<User> usuarios = service.listAll();
 		assertEquals(1, usuarios.size());
@@ -74,7 +74,7 @@ public class UserServiceTest extends BaseTests{
 	@DisplayName("Teste salvar usuario com email duplicado")
 	@Sql({"classpath:/resources/sqls/usuario.sql"})
 	void insertDuplicatedEmailTest() {
-		User user = new User(null, "Usuario Test 3", "test@teste.com.br", "123");
+		User user = new User(null, "Usuario Test 3", "test@teste.com.br", "123", "ADMIN");
 		var exception = assertThrows(ViolacaoDeIntegridade.class, () -> service.insert(user));
 		assertEquals("Esse email já existe", exception.getMessage());
 	}
@@ -82,11 +82,11 @@ public class UserServiceTest extends BaseTests{
 	@Test
 	@DisplayName("Teste salvar usuario com dados vazios")
 	void insertEmptyUserTest() {
-		User user = new User(null, "", "", "");
+		User user = new User(null, "", "", "", "");
 		var exception = assertThrows(ViolacaoDeIntegridade.class, () -> service.insert(user));
 		assertEquals("O nome está vazio", exception.getMessage());
 		
-		User user2 = new User(null, "teste", "", "");
+		User user2 = new User(null, "teste", "", "", "");
 		var exception2 = assertThrows(ViolacaoDeIntegridade.class, () -> service.insert(user2));
 		assertEquals("O email está vazio", exception2.getMessage());
 	}
@@ -112,7 +112,7 @@ public class UserServiceTest extends BaseTests{
 	@DisplayName("Teste alterar usuario")
 	@Sql({"classpath:/resources/sqls/usuario.sql"})
 	void updateTest() {
-		User user = new User(1, "Usuario Test", "test@teste.com.br", "123");
+		User user = new User(1, "Usuario Test", "test@teste.com.br", "123", "ADMIN");
 		service.update(user);
 		List<User> usuarios = service.listAll();
 		assertEquals("Usuario Test", usuarios.get(0).getName());
@@ -122,7 +122,7 @@ public class UserServiceTest extends BaseTests{
 	@DisplayName("Teste alterar usuario com email duplicado")
 	@Sql({"classpath:/resources/sqls/usuario.sql"})
 	void updateDuplicatedEmailTest() {
-		User user = new User(2, "Usuario Test 2", "test@teste.com.br", "123");
+		User user = new User(2, "Usuario Test 2", "test@teste.com.br", "123", "ADMIN");
 		var exception = assertThrows(ViolacaoDeIntegridade.class, () -> service.update(user));
 		assertEquals("Esse email já existe", exception.getMessage());
 	}
@@ -131,7 +131,7 @@ public class UserServiceTest extends BaseTests{
 	@DisplayName("Teste alterar usuario inexistente")
 	@Sql({"classpath:/resources/sqls/usuario.sql"})
 	void updateInvalidTest() {
-		User user = new User(5, "Usuario Test 2", "test@teste.com.br", "123");
+		User user = new User(5, "Usuario Test 2", "test@teste.com.br", "123", "ADMIN");
 		var exception = assertThrows(ObjetoNaoEncontrado.class, () -> service.update(user));
 		assertEquals("Esse usuário não existe", exception.getMessage());
 	}
