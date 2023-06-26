@@ -20,14 +20,6 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository repository;
-	
-	@Configuration
-	public class AppConfig {
-		@Bean
-		public RestTemplate restTemplate() {
-			return new RestTemplate();
-		}
-	}
 
 	@Override
 	public User insert(User user) {

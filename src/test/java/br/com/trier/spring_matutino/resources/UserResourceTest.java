@@ -1,10 +1,10 @@
 package br.com.trier.spring_matutino.resources;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,17 +19,13 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 import br.com.trier.spring_matutino.SpringMatutinoApplication;
 import br.com.trier.spring_matutino.config.jwt.LoginDTO;
-import br.com.trier.spring_matutino.domain.User;
 import br.com.trier.spring_matutino.domain.dto.UserDTO;
-import br.com.trier.spring_matutino.repositories.UserRepository;
-import br.com.trier.spring_matutino.services.impl.UserServiceImpl;
 
 @ActiveProfiles("test")
 @AutoConfigureTestDatabase(replace = Replace.ANY)
@@ -69,18 +65,39 @@ public class UserResourceTest {
 		assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
 	}
 	
+//	@Test
+//	@DisplayName("Cadastrar usuário")
+//	@Sql({"classpath:/resources/sqls/limpa_tabelas.sql"})
+//	public void testCreateUser() {
+//		org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+//		
+//		UserDTO dto = new UserDTO(null, "Will", "will@gmail.com", "123", "ADMIN");
+//		headers.setContentType(MediaType.APPLICATION_JSON);
+//		
+//		String accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3aWxsQGdtYWlsLmNvbSIsImlhdCI6MTY4Nzc5MDUwNCwiZXhwIjoxNjg3NzkyMzA0fQ.HAgZhMZaCPiSBy3poM_KiRvcaHiKqkEulE_4pjICcpA";
+//		headers.set("Authorization", "Bearer " + accessToken);
+//		
+//		HttpEntity<UserDTO> requestEntity = new HttpEntity<>(dto, headers);
+//		ResponseEntity<UserDTO> responseEntity = rest.exchange(
+//	            "/user", 
+//	            HttpMethod.POST,  
+//	            requestEntity,    
+//	            UserDTO.class   
+//	    );
+//		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+//		UserDTO user = responseEntity.getBody();
+//		assertEquals("Will", user.getName());
+//	}
+	
 	@Test
 	@DisplayName("Cadastrar usuário")
 	@Sql({"classpath:/resources/sqls/limpa_tabelas.sql"})
 	public void testCreateUser() {
-		org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
-		
-		UserDTO dto = new UserDTO(null, "Will", "will@gmail.com", "123", "ADMIN");
+		UserDTO dto = new UserDTO(null, "nome", "email", "senha", "ADMIN,USER");
+		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		
-		String accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3aWxsQGdtYWlsLmNvbSIsImlhdCI6MTY4Nzc5MDUwNCwiZXhwIjoxNjg3NzkyMzA0fQ.HAgZhMZaCPiSBy3poM_KiRvcaHiKqkEulE_4pjICcpA";
-		headers.set("Authorization", "Bearer " + accessToken);
-		
+		String token = getTokens();
+		headers.set("Authorization", "Bearer " + token);
 		HttpEntity<UserDTO> requestEntity = new HttpEntity<>(dto, headers);
 		ResponseEntity<UserDTO> responseEntity = rest.exchange(
 	            "/user", 
@@ -90,23 +107,35 @@ public class UserResourceTest {
 	    );
 		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
 		UserDTO user = responseEntity.getBody();
-		assertEquals("Will", user.getName());
+		assertEquals("nome", user.getName());
 	}
 	
-	@Test
-	@DisplayName("Obter Token")
-	@Sql({"classpath:/resources/sqls/limpa_tabelas.sql"})
-	@Sql({"classpath:/resources/sqls/user.sql"})
-	public void testGetToken() {
-		LoginDTO loginDTO = new LoginDTO("email", "senha");
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		HttpEntity<LoginDTO> requestEntity = new HttpEntity<>(loginDTO ,headers);
-		ResponseEntity<UserDTO> responseEntity = rest.exchange("/auth/token", HttpMethod.POST,
-				requestEntity, UserDTO.class);
-		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-		
+	@Sql({"classpath:/resources/sqls/usuario.sql"})
+	public String getTokens() {
+		LoginDTO loginDTO = new LoginDTO ("test2@teste.com.br", "123");
+		HttpHeaders headers = new HttpHeaders ();
+		headers.setContentType(MediaType. APPLICATION_JSON) ;
+		HttpEntity<LoginDTO> requestEntity = new HttpEntity<> (loginDTO, headers);
+		ResponseEntity<String> responseEntity = rest.exchange("/auth/token", HttpMethod.POST, requestEntity, String.class);
+		assertEquals (responseEntity.getStatusCode (), HttpStatus. OK) ;
+		String token = responseEntity.getBody();
+		return token;
 	}
+	
+//	@Test
+//	@DisplayName("Obter Token")
+//	@Sql({"classpath:/resources/sqls/limpa_tabelas.sql"})
+//	@Sql({"classpath:/resources/sqls/usuario.sql"})
+//	public void testGetToken() {
+//		LoginDTO loginDTO = new LoginDTO("email", "senha");
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.setContentType(MediaType.APPLICATION_JSON);
+//		HttpEntity<LoginDTO> requestEntity = new HttpEntity<>(loginDTO, headers);
+//		ResponseEntity<UserDTO> responseEntity = rest.exchange("/auth/token", HttpMethod.POST,
+//				requestEntity, UserDTO.class);
+//		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+//		
+//	}
 	
 //	private String getToken() {
 //		LoginDTO loginDTO = new LoginDTO("email", "senha");
