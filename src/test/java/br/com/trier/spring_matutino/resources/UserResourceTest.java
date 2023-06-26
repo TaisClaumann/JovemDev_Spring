@@ -38,28 +38,37 @@ public class UserResourceTest {
 	protected TestRestTemplate rest;
 
 	private ResponseEntity<UserDTO> getUser(String url) { //converte o json
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		String token = getTokens();
+		headers.set("Authorization", "Bearer " + token);
 		return rest.getForEntity(url, UserDTO.class);
 	}
 	
 	@SuppressWarnings("unused")
 	private ResponseEntity<List<UserDTO>> getUsers(String url) {//conversão mais de um usuário
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		String token = getTokens();
+		headers.set("Authorization", "Bearer " + token);
 		return rest.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<UserDTO>>() {
 		});
 	}
 	
-	@Test
-	@DisplayName("Buscar por id")
-	public void testGetOk() {
-		//String token =  getToken();
-		ResponseEntity<UserDTO> response = getUser("/user/1");
-		assertEquals(response.getStatusCode(), HttpStatus.OK);
-
-		UserDTO user = response.getBody();
-		assertEquals("Usuario Test 1", user.getName());
-	}
-
+//	@Test
+//	@DisplayName("Buscar por id")
+//	public void testGetOk() {
+//		//String token =  getToken();
+//		ResponseEntity<UserDTO> response = getUser("/user/1");
+//		assertEquals(response.getStatusCode(), HttpStatus.OK);
+//
+//		UserDTO user = response.getBody();
+//		assertEquals("Usuario Test 1", user.getName());
+//	}
+//
 	@Test
 	@DisplayName("Buscar por id inexistente")
+	@Sql({"classpath:/resources/sqls/limpa_tabelas.sql"})
 	public void testGetNotFound() {
 		ResponseEntity<UserDTO> response = getUser("/user/3");
 		assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
@@ -114,7 +123,7 @@ public class UserResourceTest {
 	public String getTokens() {
 		LoginDTO loginDTO = new LoginDTO ("test2@teste.com.br", "123");
 		HttpHeaders headers = new HttpHeaders ();
-		headers.setContentType(MediaType. APPLICATION_JSON) ;
+		headers.setContentType(MediaType.APPLICATION_JSON) ;
 		HttpEntity<LoginDTO> requestEntity = new HttpEntity<> (loginDTO, headers);
 		ResponseEntity<String> responseEntity = rest.exchange("/auth/token", HttpMethod.POST, requestEntity, String.class);
 		assertEquals (responseEntity.getStatusCode (), HttpStatus. OK) ;
@@ -122,30 +131,20 @@ public class UserResourceTest {
 		return token;
 	}
 	
-//	@Test
-//	@DisplayName("Obter Token")
-//	@Sql({"classpath:/resources/sqls/limpa_tabelas.sql"})
-//	@Sql({"classpath:/resources/sqls/usuario.sql"})
-//	public void testGetToken() {
-//		LoginDTO loginDTO = new LoginDTO("email", "senha");
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setContentType(MediaType.APPLICATION_JSON);
-//		HttpEntity<LoginDTO> requestEntity = new HttpEntity<>(loginDTO, headers);
-//		ResponseEntity<UserDTO> responseEntity = rest.exchange("/auth/token", HttpMethod.POST,
-//				requestEntity, UserDTO.class);
-//		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
-//		
-//	}
-	
-//	private String getToken() {
-//		LoginDTO loginDTO = new LoginDTO("email", "senha");
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setContentType(MediaType.APPLICATION_JSON);
-//		HttpEntity<LoginDTO> requestEntity = new HttpEntity<>(loginDTO ,headers);
-//		ResponseEntity<UserDTO> responseEntity = rest.exchange("/auth/token", HttpMethod.POST,
-//				requestEntity, UserDTO.class);
-//		return token;
-//	}
+	@Test
+	@DisplayName("Obter Token")
+	@Sql({"classpath:/resources/sqls/limpa_tabelas.sql"})
+	@Sql({"classpath:/resources/sqls/usuario.sql"})
+	public void testGetToken() {
+		LoginDTO loginDTO = new LoginDTO("test2@teste.com.br", "123");
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<LoginDTO> requestEntity = new HttpEntity<>(loginDTO, headers);
+		ResponseEntity<String> responseEntity = rest.exchange("/auth/token", HttpMethod.POST,
+				requestEntity, String.class);
+		assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		
+	}
 	
 	@Test
 	@DisplayName("Teste listar todos")

@@ -21,7 +21,7 @@ public class JwtUserDetailService implements UserDetailsService{
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		br.com.trier.spring_matutino.domain.User user = repository.findByEmail(email).orElseThrow(null);
 		return User.builder()
-				.username(user.getName())
+				.username(user.getEmail())
 				.password(encoder.encode(user.getPassword()))
 				.roles(user.getRoles().split(","))
 				.build();
