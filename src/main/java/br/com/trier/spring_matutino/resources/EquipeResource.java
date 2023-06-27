@@ -24,20 +24,20 @@ public class EquipeResource {
 	@Autowired
 	private EquipeService service;
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping
 	public ResponseEntity<Equipe> insert(@RequestBody Equipe equipe){
 		return ResponseEntity.ok(service.insert(equipe));
 	}
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/{id}")
 	public ResponseEntity<Equipe> update(@RequestBody Equipe equipe, @PathVariable Integer id){
 		equipe.setId(id);
 		return ResponseEntity.ok(service.update(equipe));
 	}
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		service.delete(id);

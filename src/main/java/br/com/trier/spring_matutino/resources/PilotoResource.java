@@ -31,7 +31,7 @@ public class PilotoResource {
 	@Autowired
 	private PaisService paisService;
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping
 	public ResponseEntity<PilotoDTO> insert(@RequestBody PilotoDTO pilotoDTO){
 		equipeService.findById(pilotoDTO.getEquipeId());
@@ -39,7 +39,7 @@ public class PilotoResource {
 		return ResponseEntity.ok(service.insert(new Piloto(pilotoDTO)).toDTO());
 	}
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/{id}")
 	public ResponseEntity<PilotoDTO> update(@RequestBody PilotoDTO pilotoDTO, @PathVariable Integer id){
 		equipeService.findById(pilotoDTO.getEquipeId());
@@ -49,7 +49,7 @@ public class PilotoResource {
 		return ResponseEntity.ok(service.update(piloto).toDTO());
 	}
 
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		service.delete(id);

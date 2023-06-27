@@ -28,14 +28,14 @@ public class PistaResource {
 	@Autowired
 	private PaisService paisService;
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping
 	public ResponseEntity<Pista> insert(@RequestBody Pista pista){
 		paisService.findById(pista.getPais().getId());
 		return ResponseEntity.ok(service.insert(pista));
 	}
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/{id}")
 	public ResponseEntity<Pista> update(@RequestBody Pista pista, @PathVariable Integer id){
 		paisService.findById(pista.getPais().getId());
@@ -49,7 +49,7 @@ public class PistaResource {
 		return ResponseEntity.ok(service.listAll());
 	}
 
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		service.delete(id);

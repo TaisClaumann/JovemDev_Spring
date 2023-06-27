@@ -31,7 +31,7 @@ public class PilotoCorridaResource {
 	@Autowired
 	private PilotoService pilotoService;
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping
 	public ResponseEntity<PilotoCorridaDTO> insert(@RequestBody PilotoCorridaDTO pilotoCorridaDTO){
 		return ResponseEntity.ok(service.insert(new PilotoCorrida(
@@ -40,7 +40,7 @@ public class PilotoCorridaResource {
 													corridaService.findById(pilotoCorridaDTO.getCorridaId()))).toDTO());
 	}
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/{id}")
 	public ResponseEntity<PilotoCorridaDTO> update(@RequestBody PilotoCorridaDTO pilotoCorridaDTO, @PathVariable Integer id){
 		PilotoCorrida piloto = new PilotoCorrida(
@@ -51,7 +51,7 @@ public class PilotoCorridaResource {
 		return ResponseEntity.ok(service.update(piloto).toDTO());
 	}
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		service.delete(id);

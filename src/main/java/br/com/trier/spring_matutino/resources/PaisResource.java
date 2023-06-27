@@ -24,20 +24,20 @@ public class PaisResource {
 	@Autowired
 	private PaisService service;
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping
 	public ResponseEntity<Pais> insert(@RequestBody Pais pais){
 		return ResponseEntity.ok(service.insert(pais));
 	}
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/{id}")
 	public ResponseEntity<Pais> update(@PathVariable Integer id, @RequestBody Pais pais){
 		pais.setId(id);
 		return ResponseEntity.ok(service.update(pais));
 	}
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		service.delete(id);

@@ -9,10 +9,13 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 
 import br.com.trier.spring_matutino.BaseTests;
 import br.com.trier.spring_matutino.ativ_dado.exceptions.ValorInvalidoException;
+import br.com.trier.spring_matutino.config.jwt.LoginDTO;
 import br.com.trier.spring_matutino.domain.User;
 import br.com.trier.spring_matutino.services.exceptions.ObjetoNaoEncontrado;
 import br.com.trier.spring_matutino.services.exceptions.ViolacaoDeIntegridade;

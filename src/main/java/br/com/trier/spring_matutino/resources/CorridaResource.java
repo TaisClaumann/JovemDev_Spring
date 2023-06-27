@@ -35,7 +35,7 @@ public class CorridaResource {
 	@Autowired
 	private CampeonatoService campeonatoService;
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping
 	public ResponseEntity<CorridaDTO> insert(@RequestBody CorridaDTO corridaDTO){
 		return ResponseEntity.ok(service.insert(new Corrida(corridaDTO, 
@@ -43,7 +43,7 @@ public class CorridaResource {
 				pistaService.findById(corridaDTO.getPistaId()))).toDTO());
 	}
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/{id}")
 	public ResponseEntity<CorridaDTO> update(@RequestBody CorridaDTO corridaDTO, @PathVariable Integer id){
 		Corrida corrida = new Corrida(corridaDTO, 
@@ -53,7 +53,7 @@ public class CorridaResource {
 		return ResponseEntity.ok(service.update(corrida).toDTO());
 	}
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		service.delete(id);

@@ -25,20 +25,20 @@ public class CampeonatoResource {
 	@Autowired
 	private CampeonatoService service;
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@PostMapping
 	public ResponseEntity<Campeonato> insert(@RequestBody Campeonato campeonato){
 		return ResponseEntity.ok(service.insert(campeonato));
 	}
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@PutMapping("/{id}")
 	public ResponseEntity<Campeonato> update(@RequestBody Campeonato campeonato, @PathVariable Integer id){
 		campeonato.setId(id);
 		return ResponseEntity.ok(service.update(campeonato));
 	}
 	
-	@Secured({"ROLE_ADMIN_USER"})
+	@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		service.delete(id);
