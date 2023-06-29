@@ -32,9 +32,9 @@ public class UserServiceTest extends BaseTests{
 	@DisplayName("Teste buscar usuário por id")
 	@Sql({"classpath:/resources/sqls/usuario.sql"})
 	void findByIdTest() {
-		var usuario = service.findById(1);
+		var usuario = service.findById(3);
 		assertThat(usuario).isNotNull();
-		assertEquals(1, usuario.getId());
+		assertEquals(3, usuario.getId());
 		assertEquals("Usuario Test 1", usuario.getName());
 		assertEquals("test@teste.com.br", usuario.getEmail());
 		assertEquals("123", usuario.getPassword());
@@ -98,7 +98,7 @@ public class UserServiceTest extends BaseTests{
 	@DisplayName("Teste deletar usuario")
 	@Sql({"classpath:/resources/sqls/usuario.sql"})
 	void deleteTest() {
-		service.delete(1);
+		service.delete(4);
 		List<User> usuarios = service.listAll();
 		assertEquals(1, usuarios.size());
 	}
@@ -107,15 +107,15 @@ public class UserServiceTest extends BaseTests{
 	@DisplayName("Teste deletar usuario inexistente")
 	@Sql({"classpath:/resources/sqls/usuario.sql"})
 	void deleteInexistentTest() {
-		var exception = assertThrows(ObjetoNaoEncontrado.class, () -> service.delete(3));
-		assertEquals("Usuário 3 não encontrado", exception.getMessage());
+		var exception = assertThrows(ObjetoNaoEncontrado.class, () -> service.delete(10));
+		assertEquals("Usuário 10 não encontrado", exception.getMessage());
 	}
 	
 	@Test
 	@DisplayName("Teste alterar usuario")
 	@Sql({"classpath:/resources/sqls/usuario.sql"})
 	void updateTest() {
-		User user = new User(1, "Usuario Test", "test@teste.com.br", "123", "ADMIN");
+		User user = new User(3, "Usuario Test", "test@teste.com.br", "123", "ADMIN");
 		service.update(user);
 		List<User> usuarios = service.listAll();
 		assertEquals("Usuario Test", usuarios.get(0).getName());
@@ -125,7 +125,7 @@ public class UserServiceTest extends BaseTests{
 	@DisplayName("Teste alterar usuario com email duplicado")
 	@Sql({"classpath:/resources/sqls/usuario.sql"})
 	void updateDuplicatedEmailTest() {
-		User user = new User(2, "Usuario Test 2", "test@teste.com.br", "123", "ADMIN");
+		User user = new User(4, "Usuario Test 2", "test@teste.com.br", "123", "ADMIN");
 		var exception = assertThrows(ViolacaoDeIntegridade.class, () -> service.update(user));
 		assertEquals("Esse email já existe", exception.getMessage());
 	}
@@ -144,7 +144,7 @@ public class UserServiceTest extends BaseTests{
 	@Sql({"classpath:/resources/sqls/usuario.sql"})
 	void findByNomeTest() {
 		User user = service.findByName("Usuario Test 1");
-		assertEquals(1, user.getId());
+		assertEquals(3, user.getId());
 		var exception = assertThrows(ObjetoNaoEncontrado.class, () -> service.findByName("4"));
 		assertEquals("Usuário 4 não encontrado", exception.getMessage());
 	}
@@ -171,7 +171,7 @@ public class UserServiceTest extends BaseTests{
 	void findByEmailTest() {
 		var usuario = service.findByEmail("test@teste.com.br");
 		assertThat(usuario).isNotNull();
-		assertEquals(1, usuario.getId());
+		assertEquals(3, usuario.getId());
 		assertEquals("Usuario Test 1", usuario.getName());
 		assertEquals("123", usuario.getPassword());
 	}
