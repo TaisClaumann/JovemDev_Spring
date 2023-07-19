@@ -28,14 +28,14 @@ public class PistaResource {
 	@Autowired
 	private PaisService paisService;
 	
-	@Secured({"ROLE_ADMIN"})
+	//@Secured({"ROLE_ADMIN"})
 	@PostMapping
 	public ResponseEntity<Pista> insert(@RequestBody Pista pista){
 		paisService.findById(pista.getPais().getId());
 		return ResponseEntity.ok(service.insert(pista));
 	}
 	
-	@Secured({"ROLE_ADMIN"})
+	//@Secured({"ROLE_ADMIN"})
 	@PutMapping("/{id}")
 	public ResponseEntity<Pista> update(@RequestBody Pista pista, @PathVariable Integer id){
 		paisService.findById(pista.getPais().getId());
@@ -43,32 +43,32 @@ public class PistaResource {
 		return ResponseEntity.ok(service.update(pista));
 	}
 	
-	@Secured({"ROLE_USER"})
+	//@Secured({"ROLE_USER"})
 	@GetMapping
 	public ResponseEntity<List<Pista>> listAll(){
 		return ResponseEntity.ok(service.listAll());
 	}
 
-	@Secured({"ROLE_ADMIN"})
+	//@Secured({"ROLE_ADMIN"})
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		service.delete(id);
 		return ResponseEntity.ok().build();
 	}
 	
-	@Secured({"ROLE_USER"})
+	//@Secured({"ROLE_USER"})
 	@GetMapping("/{id}")
 	public ResponseEntity<Pista> findById(@PathVariable Integer id){
 		return ResponseEntity.ok(service.findById(id));
 	}
 	
-	@Secured({"ROLE_USER"})
+	//@Secured({"ROLE_USER"})
 	@GetMapping("/between/{tamInicial}/{tamFinal}")
 	public ResponseEntity<List<Pista>> findByTamanhoBetween(@PathVariable Integer tamInicial, @PathVariable Integer tamFinal){
 		return ResponseEntity.ok(service.findByTamanhoBetween(tamInicial, tamFinal));
 	}
 	
-	@Secured({"ROLE_USER"})
+	//@Secured({"ROLE_USER"})
 	@GetMapping("/pais/{idPais}")
 	public ResponseEntity<List<Pista>> findByPaisOrderByTamanhoDesc(@PathVariable Integer idPais){
 		return ResponseEntity.ok(service.findByPaisOrderByTamanhoDesc(paisService.findById(idPais)));
