@@ -27,6 +27,7 @@ public class Corrida {
 	@Setter
 	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	private Integer id;
 	@Column
 	private ZonedDateTime data;

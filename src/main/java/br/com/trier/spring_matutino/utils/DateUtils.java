@@ -8,11 +8,14 @@ import java.time.format.DateTimeFormatter;
 public class DateUtils {
 	
 	private static DateTimeFormatter formatacao = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+	private static ZoneId zonaHorarioLondres = ZoneId.of("Europe/London");
 	
 	public static ZonedDateTime strToZonedDateTime(String dateStr) {
-		DateTimeFormatter formatacao = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 		LocalDateTime localDate = LocalDateTime.parse(dateStr, formatacao);
-		return ZonedDateTime.of(localDate, ZoneId.systemDefault());
+		ZonedDateTime zonedDateTime = localDate.atZone(zonaHorarioLondres).minusHours(3);
+		String dataHorarioLondres = zonedDateTime.format(formatacao);
+		LocalDateTime parseLocalDate = LocalDateTime.parse(dataHorarioLondres, formatacao);
+		return ZonedDateTime.of(parseLocalDate, ZoneId.systemDefault());
 	}
 
 	public static String zonedDateTimeToStr(ZonedDateTime data) {
